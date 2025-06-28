@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Match Winners | Coach Marcus Wright</title>
+  <style>
+    body {
+      margin: 0; padding: 0;
+      background: #000;
+      background-image: url('Match_Winners_final_4k.png');
+      background-size: cover;
+      background-position: center;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: url('stars-twinkle.png') repeat;
+      animation: twinkle 5s infinite;
+      z-index: 0;
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0.8; }
+      50% { opacity: 0.3; }
+      100% { opacity: 0.8; }
+    }
+
+    main {
+      display: flex; 
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      height: 100%;
+      color: #fff;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      animation: fadeIn 7s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    nav {
+      margin-top: 50px;
+      animation: slideDown 1.5s ease forwards;
+    }
+
+    @keyframes slideDown {
+      from {transform: translateY(-50px); opacity: 0;}
+      to {transform: translateY(0); opacity: 1;}
+    }
+
+    nav a {
+      margin: 0 25px;
+      font-size: 24px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+      text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 30px #0ff;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+      color: #0ff;
+    }
+
+    .button-container {
+      margin-bottom: 80px;
+      animation: kickIn 2s ease forwards;
+      transform-origin: center;
+    }
+
+    @keyframes kickIn {
+      0% {
+        transform: translateY(300px) translateX(-200px) scale(0.2) rotate(-30deg);
+        opacity: 0;
+      }
+      50% {
+        transform: translateY(-20px) translateX(20px) scale(1.1) rotate(5deg);
+        opacity: 1;
+      }
+      70% {
+        transform: translateY(10px) translateX(-10px) scale(0.95) rotate(-3deg);
+      }
+      100% {
+        transform: translateY(0) translateX(0) scale(1) rotate(0deg);
+      }
+    }
+
+    .button-container a {
+      background: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      padding: 20px 60px;
+      border-radius: 40px;
+      font-size: 28px;
+      text-decoration: none;
+      border: 2px solid #0ff;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.7), 0 0 60px rgba(0, 255, 255, 0.5);
+      transition: all 0.4s ease;
+    }
+
+    .button-container a:hover {
+      background: rgba(0, 255, 255, 0.2);
+      transform: scale(1.1);
+      box-shadow: 0 0 60px rgba(0, 255, 255, 0.7);
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <nav>
+      <a href="#about">ABOUT</a>
+      <a href="#services">SERVICES</a>
+      <a href="#testimonials">TESTIMONIALS</a>
+      <a href="#contact">CONTACT</a>
+    </nav>
+    <div class="button-container">
+      <a href="mailto:mw.ent@hotmail.com?subject=Match Winners Coaching Inquiry" onclick="playCheer()">BOOK NOW</a>
+    </div>
+  </main>
+  <audio id="cheer-sound">
+    <source src="crowd-cheer.mp3" type="audio/mpeg">
+  </audio>
+  <script>
+    function playCheer() {
+      var audio = document.getElementById('cheer-sound');
+      audio.currentTime = 0;
+      audio.play();
+    }
+  </script>
+</body>
+</html>
