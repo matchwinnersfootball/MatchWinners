@@ -5,20 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Match Winners | Coach Marcus Wright</title>
   <style>
+    /* ---- Base Styles ---- */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
     body {
-      margin: 0; padding: 0;
       background: #000;
       background-image: url('Match_Winners_Final_4k.png');
       background-size: cover;
       background-position: center bottom;
       background-repeat: no-repeat;
-      min-height: 100vh;
-      overflow: hidden;
-      position: relative;
       font-family: Arial, sans-serif;
+      position: relative;
+      display: flex;
+      flex-direction: column;
     }
 
-    /* Stars twinkle overlay */
+    /* Stars overlay */
     body::before {
       content: "";
       position: absolute;
@@ -36,9 +42,10 @@
 
     main {
       position: relative;
-      height: 100%;
+      flex: 1;  /* fill remaining height */
       display: flex;
       flex-direction: column;
+      justify-content: space-between; /* nav up top, button at bottom */
       align-items: center;
       padding: 40px 20px;
       z-index: 1;
@@ -51,7 +58,6 @@
     }
 
     nav {
-      margin-top: 40px;
       animation: slideDown 1.5s ease forwards;
     }
 
@@ -76,26 +82,24 @@
     }
 
     .button-container {
-      position: absolute;
-      bottom: 8%; /* adjust as needed */
+      margin-bottom: 40px; /* spacing above bottom edge */
       animation: kickIn 2s ease forwards;
-      transform-origin: center;
     }
 
     @keyframes kickIn {
       0% {
-        transform: translateY(300px) translateX(-200px) scale(0.2) rotate(-30deg);
+        transform: translateY(300px) scale(0.2) rotate(-30deg);
         opacity: 0;
       }
       50% {
-        transform: translateY(-20px) translateX(20px) scale(1.1) rotate(5deg);
+        transform: translateY(-20px) scale(1.1) rotate(5deg);
         opacity: 1;
       }
       70% {
-        transform: translateY(10px) translateX(-10px) scale(0.95) rotate(-3deg);
+        transform: translateY(10px) scale(0.95) rotate(-3deg);
       }
       100% {
-        transform: translateY(0) translateX(0) scale(1) rotate(0deg);
+        transform: translateY(0) scale(1) rotate(0deg);
       }
     }
 
@@ -117,7 +121,7 @@
       box-shadow: 0 0 60px rgba(0, 255, 255, 0.7);
     }
 
-    /* Responsive improvements */
+    /* ---- Responsive tweaks ---- */
     @media (min-width: 768px) {
       nav a {
         font-size: 26px;
@@ -132,9 +136,6 @@
       body {
         background-size: contain;
         background-position: center bottom;
-      }
-      .button-container {
-        bottom: 10%; /* tweak for silhouette on mobile */
       }
     }
   </style>
