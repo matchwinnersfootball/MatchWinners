@@ -35,14 +35,12 @@
     }
 
     main {
-      display: flex; 
+      display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: flex-start;
       align-items: center;
-      padding: 60px 20px;
-      height: 100%;
-      color: #fff;
-      text-align: center;
+      padding: 40px 20px;
+      min-height: 100%;
       position: relative;
       z-index: 1;
       animation: fadeIn 7s ease-in;
@@ -54,7 +52,7 @@
     }
 
     nav {
-      margin: 0 auto 40px auto;
+      margin-bottom: 40px;
       animation: slideDown 1.5s ease forwards;
     }
 
@@ -78,10 +76,14 @@
       color: #0ff;
     }
 
+    .flex-spacer {
+      flex-grow: 1;
+    }
+
     .button-container {
-      margin-bottom: 40px;
       animation: kickIn 2s ease forwards;
       transform-origin: center;
+      margin-bottom: 30px;
     }
 
     @keyframes kickIn {
@@ -146,6 +148,7 @@
       <a href="#testimonials">TESTIMONIALS</a>
       <a href="#contact">CONTACT</a>
     </nav>
+    <div class="flex-spacer"></div>
     <div class="button-container">
       <a href="mailto:mw.ent@hotmail.com?subject=Match Winners Coaching Inquiry" onclick="playCheer()">BOOK NOW</a>
     </div>
