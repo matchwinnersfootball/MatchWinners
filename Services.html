@@ -12,11 +12,11 @@
       background-size: cover;
       background-position: center bottom;
       background-repeat: no-repeat;
-      min-height: 100vh;
-      overflow: hidden;
+      min-height: 100vh; /* allows scrolling */
       position: relative;
       font-family: Arial, sans-serif;
       color: #fff;
+      overflow-x: hidden; /* only hides sideways scroll */
     }
 
     body::before {
@@ -107,7 +107,7 @@
   <main>
     <nav>
       <a href="index.html">HOME</a>
-      <a href="services.html">SERVICES</a>
+      <a href="Services.html">SERVICES</a>
       <a href="#testimonials">TESTIMONIALS</a>
       <a href="#contact">CONTACT</a>
     </nav>
