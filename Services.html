@@ -8,15 +8,15 @@
     body {
       margin: 0; padding: 0;
       background: #000;
-      background-image: url('Match_Winners_Final_4k.png');
+      background-image: url('Match_Winners_final_4k.png');
       background-size: cover;
       background-position: center bottom;
       background-repeat: no-repeat;
-      min-height: 100vh; /* allows scrolling */
+      min-height: 100vh;
       position: relative;
       font-family: Arial, sans-serif;
       color: #fff;
-      overflow-x: hidden; /* only hides sideways scroll */
+      overflow-x: hidden; /* only hide horizontal overflow */
     }
 
     body::before {
@@ -37,7 +37,7 @@
     main {
       position: relative;
       z-index: 1;
-      padding: 80px 20px 40px 20px;
+      padding: 80px 20px 60px 20px;
       max-width: 800px;
       margin: 0 auto;
       text-align: center;
@@ -71,6 +71,7 @@
     }
 
     .service {
+      position: relative;
       margin: 20px 0;
       font-size: 18px;
       background: rgba(0,0,0,0.6);
@@ -84,6 +85,26 @@
     .service:hover {
       transform: translateY(-5px);
       box-shadow: 0 0 40px rgba(0,255,255,0.7);
+    }
+
+    .pricing-info {
+      display: none;
+      position: absolute;
+      bottom: 10px; 
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,255,255,0.9);
+      color: #000;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      box-shadow: 0 0 10px rgba(0,255,255,0.7);
+      white-space: nowrap;
+      z-index: 2;
+    }
+
+    .service:hover .pricing-info {
+      display: block;
     }
 
     @keyframes fadeIn {
@@ -114,27 +135,29 @@
     <h1>Our Coaching Services</h1>
 
     <div class="service">
-      ⚽ <strong>1-to-1 Coaching</strong><br>
-      Personalised sessions for players aged 9+, from grassroots to academy level. I use my trademarked techniques and proven frameworks to develop match-winning moments.
+       <strong>1-to-1 Coaching</strong><br>
+      Personalised sessions for players aged 9+, from grassroots to academy level. I use my trademarked techniques and frameworks to develop match-winning moments.
+      <span class="pricing-info">💷 £60/hour • 10 for price of 8</span>
     </div>
 
     <div class="service">
-      🏃 <strong>Focus Group Training</strong><br>
+       <strong>Focus Group Training</strong><br>
       Small focus groups, 2–6 players, working together to sharpen real-game scenarios, decision making, and competitive edge.
+      <span class="pricing-info">💷 £40/hour per person</span>
     </div>
 
     <div class="service">
-      🎯 <strong>Decisive Moment Analysis</strong><br>
+       <strong>Decisive Moment Analysis</strong><br>
       My unique framework helps players break down exactly what really wins matches — so they can repeat key actions under pressure.
     </div>
 
     <div class="service">
-      🧠 <strong>Mindset & Confidence Coaching</strong><br>
+       <strong>Mindset & Confidence Coaching</strong><br>
       Junior athlete psychology coaching to build resilience, self-belief, and leadership skills on and off the pitch.
     </div>
 
     <div class="service">
-      🎓 <strong>Academy Trial Prep</strong><br>
+       <strong>Academy Trial Prep</strong><br>
       Bespoke sessions to prepare players for club or academy trials — from technique to attitude.
     </div>
 
