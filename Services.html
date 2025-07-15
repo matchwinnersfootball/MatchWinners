@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Our Services | Match Winners</title>
+  <style>
+    body {
+      margin: 0; padding: 0;
+      background: #000;
+      background-image: url('Match_Winners_final_4k.png');
+      background-size: cover;
+      background-position: center bottom;
+      background-repeat: no-repeat;
+      min-height: 100vh;
+      overflow: hidden;
+      position: relative;
+      font-family: Arial, sans-serif;
+      color: #fff;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: url('stars-twinkle.png') repeat;
+      animation: twinkle 5s infinite;
+      z-index: 0;
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0.8; }
+      50% { opacity: 0.3; }
+      100% { opacity: 0.8; }
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      padding: 80px 20px 40px 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      animation: fadeIn 2s ease-in;
+    }
+
+    nav {
+      margin-bottom: 40px;
+      animation: slideDown 1.5s ease forwards;
+    }
+
+    nav a {
+      margin: 0 20px;
+      font-size: 20px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 30px #0ff;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+      color: #0ff;
+    }
+
+    h1 {
+      font-size: 40px;
+      margin-bottom: 20px;
+      text-shadow: 0 0 20px #0ff;
+    }
+
+    .service {
+      margin: 20px 0;
+      font-size: 18px;
+      background: rgba(0,0,0,0.6);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,255,255,0.5);
+      transition: transform 0.3s ease;
+      line-height: 1.5;
+    }
+
+    .service:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 40px rgba(0,255,255,0.7);
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    @keyframes slideDown {
+      from {transform: translateY(-50px); opacity: 0;}
+      to {transform: translateY(0); opacity: 1;}
+    }
+
+    @media (min-width: 768px) {
+      nav a { font-size: 24px; }
+      h1 { font-size: 48px; }
+      .service { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <nav>
+      <a href="index.html">HOME</a>
+      <a href="services.html">SERVICES</a>
+      <a href="#testimonials">TESTIMONIALS</a>
+      <a href="#contact">CONTACT</a>
+    </nav>
+    <h1>Our Coaching Services</h1>
+
+    <div class="service">
+      ⚽ <strong>1-to-1 Coaching</strong><br>
+      Personalised sessions for players aged 9+, from grassroots to academy level. I use my trademarked techniques and proven frameworks to develop match-winning moments.
+    </div>
+
+    <div class="service">
+      🏃 <strong>Focus Group Training</strong><br>
+      Small focus groups, 2–6 players, working together to sharpen real-game scenarios, decision making, and competitive edge.
+    </div>
+
+    <div class="service">
+      🎯 <strong>Decisive Moment Analysis</strong><br>
+      My unique framework helps players break down exactly what really wins matches — so they can repeat key actions under pressure.
+    </div>
+
+    <div class="service">
+      🧠 <strong>Mindset & Confidence Coaching</strong><br>
+      Junior athlete psychology coaching to build resilience, self-belief, and leadership skills on and off the pitch.
+    </div>
+
+    <div class="service">
+      🎓 <strong>Academy Trial Prep</strong><br>
+      Bespoke sessions to prepare players for club or academy trials — from technique to attitude.
+    </div>
+
+    <div class="service">
+      🎉 <strong>Special Events & Guest Coaching</strong><br>
+      Available for birthday sessions, team building, or bookings as a guest coach at your club, camp, or holiday setup.
+    </div>
+
+  </main>
+</body>
+</html>
