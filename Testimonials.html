@@ -1,173 +1,98 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Player & Parent Testimonials | Match Winners</title>
+  <title>Player & Parent Testimonials</title>
   <style>
     body {
-      margin: 0; padding: 0;
-      background: #000;
-      background-image: url('Match_Winners_Final_4k.png');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      min-height: 100vh;
-      position: relative;
-      overflow-x: hidden;
-      font-family: Arial, sans-serif;
-      color: #fff;
-    }
-
-    body::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
+      margin: 0;
+      padding: 0;
+      font-family: 'Orbitron', sans-serif;
       background: url('stars-twinkle.png') repeat;
-      animation: twinkle 8s infinite;
-      z-index: 0;
+      background-color: #0b0f1a;
+      color: white;
+      overflow-x: hidden;
     }
 
-    @keyframes twinkle {
-      0% { opacity: 0.7; }
-      50% { opacity: 0.3; }
-      100% { opacity: 0.7; }
-    }
-
-    main {
-      position: relative;
-      z-index: 1;
-      padding: 80px 20px 60px 20px;
-      max-width: 1200px;
-      margin: 0 auto;
+    header {
       text-align: center;
-      animation: fadeIn 2s ease-in;
-    }
-
-    nav {
-      margin-bottom: 40px;
-    }
-
-    nav a {
-      margin: 0 20px;
-      font-size: 20px;
-      color: #fff;
-      text-decoration: none;
+      padding: 60px 20px;
+      font-size: 2.5em;
       font-weight: bold;
-      text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 30px #0ff;
-      transition: color 0.3s ease;
+      background: linear-gradient(145deg, #1e1e2f, #2b2b45);
+      color: #ffffff;
+      text-shadow: 0 0 10px #00ffff;
     }
 
-    nav a:hover {
-      text-decoration: underline;
-      color: #0ff;
-    }
-
-    h1 {
-      font-size: 40px;
-      margin-bottom: 50px;
-      text-shadow: 0 0 20px #0ff;
-    }
-
-    .testimonials {
+    .testimonial-section {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 40px;
-      perspective: 1000px;
+      gap: 30px;
+      padding: 40px 20px;
     }
 
     .testimonial-card {
-      position: relative;
       background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(0, 255, 255, 0.3);
-      border-radius: 20px;
+      border: 1px solid #444;
+      border-radius: 15px;
       padding: 20px;
-      width: 250px;
+      width: 300px;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       backdrop-filter: blur(10px);
-      box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
-      transition: transform 0.5s ease, box-shadow 0.5s ease;
-      animation: float 6s ease-in-out infinite alternate;
+      animation: floatCard 6s ease-in-out infinite;
     }
 
     .testimonial-card:hover {
-      transform: translateY(-10px) rotateY(4deg) rotateX(4deg);
-      box-shadow: 0 0 50px rgba(0, 255, 255, 0.4);
+      transform: translateY(-8px);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
     }
 
-    .testimonial-card .avatar {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      border: 2px solid #0ff;
-      margin-bottom: 10px;
-      object-fit: cover;
+    @keyframes floatCard {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
     }
 
-    .testimonial-card h3 {
-      margin: 10px 0 5px;
-      color: #0ff;
+    .testimonial-author {
+      margin-top: 15px;
+      font-weight: bold;
+      color: #00ffff;
+      text-shadow: 0 0 3px #00ffff;
     }
 
-    .stars {
-      color: #ffeb3b;
-      margin: 5px 0;
+    .testimonial-text {
+      font-size: 0.95em;
+      line-height: 1.4;
+      margin-top: 10px;
     }
 
-    .testimonial-card p {
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    @keyframes float {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-10px); }
-    }
-
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
-    }
-
-    @media (max-width: 768px) {
-      nav a { font-size: 18px; }
-      h1 { font-size: 32px; }
-      .testimonial-card { width: 90%; }
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9em;
+      color: #aaa;
     }
   </style>
 </head>
 <body>
-  <main>
-    <nav>
-      <a href="index.html">HOME</a>
-      <a href="Services.html">SERVICES</a>
-      <a href="Testimonials.html">TESTIMONIALS</a>
-      <a href="#contact">CONTACT</a>
-    </nav>
-    <h1>Player & Parent Testimonials</h1>
-
-    <div class="testimonials">
-      <div class="testimonial-card" style="transform: rotateY(5deg);">
-        <img src="https://source.unsplash.com/80x80/?portrait,boy" alt="Player" class="avatar">
-        <h3>Leo H.</h3>
-        <div class="stars">★★★★★</div>
-        <p>“Coach Marcus helped me believe in myself and score match-winning goals!”</p>
-      </div>
-
-      <div class="testimonial-card" style="transform: rotateY(-5deg);">
-        <img src="https://source.unsplash.com/80x80/?portrait,woman" alt="Parent" class="avatar">
-        <h3>Parent, U11</h3>
-        <div class="stars">★★★★★</div>
-        <p>“The sessions have boosted my child’s confidence and made him love football again!”</p>
-      </div>
-
-      <div class="testimonial-card" style="transform: rotateX(3deg);">
-        <img src="https://source.unsplash.com/80x80/?portrait,teen" alt="Player" class="avatar">
-        <h3>Mia R.</h3>
-        <div class="stars">★★★★☆</div>
-        <p>“Training is intense but fun — I’ve learned so much about decisive moments.”</p>
-      </div>
+  <header>Player & Parent Testimonials</header>
+  <section class="testimonial-section">
+    <div class="testimonial-card">
+      <div class="testimonial-text">"Coach Marcus has transformed my son's game. He's more confident and tactical now. Thank you!"</div>
+      <div class="testimonial-author">– Parent of U11 Player</div>
     </div>
-  </main>
+    <div class="testimonial-card">
+      <div class="testimonial-text">"Training sessions are intense but fun. I’ve scored more goals this season than ever!"</div>
+      <div class="testimonial-author">– U11 Player</div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-text">"The atmosphere is professional yet encouraging. Couldn’t have asked for better coaching."</div>
+      <div class="testimonial-author">– Parent of U10 Player</div>
+    </div>
+  </section>
+  <footer>© 2025 Match Winners Coaching</footer>
 </body>
 </html>
