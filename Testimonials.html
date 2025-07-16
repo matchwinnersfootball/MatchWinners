@@ -6,24 +6,27 @@
   <title>Player & Parent Testimonials | Match Winners</title>
   <style>
     body {
-      margin: 0; padding: 0;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
       background: #000;
       background-image: url('Match_Winners_Final_4k.png');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
       min-height: 100vh;
-      position: relative;
       overflow-x: hidden;
-      font-family: Arial, sans-serif;
+      position: relative;
       color: #fff;
     }
 
+    /* Star overlay */
     body::before {
       content: "";
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
       background: url('stars-twinkle.png') repeat;
+      opacity: 0.3;
       animation: twinkle 8s infinite;
       z-index: 0;
     }
@@ -37,7 +40,7 @@
     main {
       position: relative;
       z-index: 1;
-      padding: 80px 20px 60px 20px;
+      padding: 80px 20px 60px;
       max-width: 1200px;
       margin: 0 auto;
       text-align: center;
@@ -49,18 +52,18 @@
     }
 
     nav a {
-      margin: 0 20px;
+      margin: 0 15px;
       font-size: 20px;
       color: #fff;
       text-decoration: none;
       font-weight: bold;
-      text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 30px #0ff;
+      text-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
       transition: color 0.3s ease;
     }
 
     nav a:hover {
-      text-decoration: underline;
       color: #0ff;
+      text-decoration: underline;
     }
 
     h1 {
@@ -73,35 +76,37 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 40px;
+      gap: 30px;
       perspective: 1000px;
     }
 
     .testimonial-card {
       position: relative;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(0, 255, 255, 0.3);
-      border-radius: 20px;
+      width: 280px;
       padding: 20px;
-      width: 250px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(10px);
-      box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
-      transition: transform 0.5s ease, box-shadow 0.5s ease;
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 255, 255, 0.2);
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.15);
+      color: #fff;
       animation: float 6s ease-in-out infinite alternate;
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
     }
 
     .testimonial-card:hover {
       transform: translateY(-10px) rotateY(4deg) rotateX(4deg);
-      box-shadow: 0 0 50px rgba(0, 255, 255, 0.4);
+      box-shadow: 0 0 50px rgba(0, 255, 255, 0.3);
     }
 
-    .testimonial-card .avatar {
+    .avatar {
       width: 60px;
       height: 60px;
       border-radius: 50%;
       border: 2px solid #0ff;
-      margin-bottom: 10px;
       object-fit: cover;
+      margin-bottom: 10px;
     }
 
     .testimonial-card h3 {
@@ -111,6 +116,7 @@
 
     .stars {
       color: #ffeb3b;
+      font-size: 18px;
       margin: 5px 0;
     }
 
@@ -125,8 +131,8 @@
     }
 
     @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     @media (max-width: 768px) {
@@ -144,14 +150,15 @@
       <a href="Testimonials.html">TESTIMONIALS</a>
       <a href="#contact">CONTACT</a>
     </nav>
+
     <h1>Player & Parent Testimonials</h1>
 
     <div class="testimonials">
       <div class="testimonial-card" style="transform: rotateY(5deg);">
         <img src="https://source.unsplash.com/80x80/?portrait,boy" alt="Player" class="avatar">
-        <h3>U15 player.</h3>
+        <h3>Leo H.</h3>
         <div class="stars">★★★★★</div>
-        <p>“Coach Marcus helped me believe in myself and understand how to prepare to perform”</p>
+        <p>“Coach Marcus helped me believe in myself and score match-winning goals!”</p>
       </div>
 
       <div class="testimonial-card" style="transform: rotateY(-5deg);">
