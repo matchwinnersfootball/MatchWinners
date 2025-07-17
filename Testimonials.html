@@ -75,8 +75,7 @@
       text-shadow: 0 0 20px #0ff;
     }
 
-    .testimonials,
-    .testimonial-space {
+    .testimonials, .testimonial-space {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -84,8 +83,7 @@
       perspective: 1200px;
     }
 
-    .testimonial-card,
-    .card {
+    .testimonial-card, .card {
       position: relative;
       width: 280px;
       padding: 20px;
@@ -103,8 +101,7 @@
       transform-style: preserve-3d;
     }
 
-    .testimonial-card:hover,
-    .card:hover {
+    .testimonial-card:hover, .card:hover {
       transform: translateY(-10px) rotateY(4deg) rotateX(4deg);
       box-shadow: 0 0 50px rgba(0, 255, 255, 0.3);
     }
@@ -160,10 +157,7 @@
     @media (max-width: 768px) {
       nav a { font-size: 18px; }
       h1 { font-size: 32px; }
-      .testimonial-card,
-      .card {
-        width: 90%;
-      }
+      .testimonial-card, .card { width: 90%; }
     }
   </style>
 </head>
@@ -202,19 +196,16 @@
       </div>
     </div>
 
-    <!-- 3D Animated Testimonial Cards -->
+    <!-- Additional Styled Testimonials -->
     <div class="testimonial-space">
       <div class="card" style="transform: rotateY(6deg) rotateX(1deg) translateZ(10px);">
-        <p class="quote">"You are the best thing that has happened to the boys."</p>
-        <p class="author">— Prajesh Kotecha (Oscar’s Dad)</p>
+        <p class="quote">“You are the best thing that has happened to the boys.”</p>
+        <p class="author">— <span style="color:#0ff; font-weight:bold;">Prajesh Kotecha (Oscar’s Dad)</span></p>
       </div>
+
       <div class="card" style="transform: rotateY(-4deg) rotateX(-1deg) translateZ(-20px) scale(0.98);">
-        <p class="quote">"We have structure, a purpose and a common goal."</p>
-        <p class="author">— Prajesh Kotecha</p>
-      </div>
-      <div class="card" style="transform: rotateY(3deg) rotateX(3deg) translateZ(30px) scale(1.02);">
-        <p class="quote">"This has completely transformed our child’s mindset."</p>
-        <p class="author">— Sarah Ali</p>
+        <p class="quote">“We have structure, a purpose and a common goal.”</p>
+        <p class="author">— <span style="color:#0ff; font-weight:bold;">Prajesh Kotecha</span></p>
       </div>
     </div>
   </main>
