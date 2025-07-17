@@ -5,10 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Player & Parent Testimonials | Match Winners</title>
   <style>
-    body {
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
       font-family: Arial, sans-serif;
+    }
+
+    body {
       background: #000;
       background-image: url('Match_Winners_Final_4k.png');
       background-size: cover;
@@ -20,7 +24,6 @@
       color: #fff;
     }
 
-    /* Star overlay */
     body::before {
       content: "";
       position: absolute;
@@ -72,15 +75,17 @@
       text-shadow: 0 0 20px #0ff;
     }
 
-    .testimonials {
+    .testimonials,
+    .testimonial-space {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 30px;
-      perspective: 1000px;
+      perspective: 1200px;
     }
 
-    .testimonial-card {
+    .testimonial-card,
+    .card {
       position: relative;
       width: 280px;
       padding: 20px;
@@ -91,11 +96,15 @@
       border: 1px solid rgba(0, 255, 255, 0.2);
       box-shadow: 0 0 30px rgba(0, 255, 255, 0.15);
       color: #fff;
-      animation: float 6s ease-in-out infinite alternate;
-      transition: transform 0.5s ease, box-shadow 0.5s ease;
+      transition: transform 0.6s ease, box-shadow 0.6s ease;
+      text-align: left;
+      cursor: pointer;
+      z-index: 1;
+      transform-style: preserve-3d;
     }
 
-    .testimonial-card:hover {
+    .testimonial-card:hover,
+    .card:hover {
       transform: translateY(-10px) rotateY(4deg) rotateX(4deg);
       box-shadow: 0 0 50px rgba(0, 255, 255, 0.3);
     }
@@ -120,14 +129,21 @@
       margin: 5px 0;
     }
 
-    .testimonial-card p {
+    .testimonial-card p,
+    .card .quote,
+    .card .author {
       font-size: 14px;
       line-height: 1.5;
     }
 
-    @keyframes float {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-10px); }
+    .card .quote {
+      font-style: italic;
+      margin-bottom: 12px;
+    }
+
+    .card .author {
+      font-weight: bold;
+      color: #0ff;
     }
 
     @keyframes fadeIn {
@@ -135,10 +151,19 @@
       to { opacity: 1; }
     }
 
+    .card.zoomed {
+      transform: scale(1.4) translateZ(100px) !important;
+      z-index: 999;
+      box-shadow: 0 0 100px rgba(0, 255, 255, 0.7);
+    }
+
     @media (max-width: 768px) {
       nav a { font-size: 18px; }
       h1 { font-size: 32px; }
-      .testimonial-card { width: 90%; }
+      .testimonial-card,
+      .card {
+        width: 90%;
+      }
     }
   </style>
 </head>
@@ -153,6 +178,7 @@
 
     <h1>Player & Parent Testimonials</h1>
 
+    <!-- Standard Testimonials -->
     <div class="testimonials">
       <div class="testimonial-card" style="transform: rotateY(5deg);">
         <img src="https://source.unsplash.com/80x80/?portrait,boy" alt="Player" class="avatar">
@@ -175,6 +201,45 @@
         <p>“Training is intense but fun — I’ve learned so much about decisive moments.”</p>
       </div>
     </div>
+
+    <!-- 3D Animated Testimonial Cards -->
+    <div class="testimonial-space">
+      <div class="card" style="transform: rotateY(6deg) rotateX(1deg) translateZ(10px);">
+        <p class="quote">"You are the best thing that has happened to the boys."</p>
+        <p class="author">— Prajesh Kotecha (Oscar’s Dad)</p>
+      </div>
+      <div class="card" style="transform: rotateY(-4deg) rotateX(-1deg) translateZ(-20px) scale(0.98);">
+        <p class="quote">"We have structure, a purpose and a common goal."</p>
+        <p class="author">— Prajesh Kotecha</p>
+      </div>
+      <div class="card" style="transform: rotateY(3deg) rotateX(3deg) translateZ(30px) scale(1.02);">
+        <p class="quote">"This has completely transformed our child’s mindset."</p>
+        <p class="author">— Sarah Ali</p>
+      </div>
+    </div>
   </main>
+
+  <script>
+    const cards = document.querySelectorAll('.card');
+    let activeCard = null;
+
+    cards.forEach(card => {
+      card.addEventListener('click', e => {
+        e.stopPropagation();
+        if (activeCard && activeCard !== card) {
+          activeCard.classList.remove('zoomed');
+        }
+        card.classList.toggle('zoomed');
+        activeCard = card.classList.contains('zoomed') ? card : null;
+      });
+    });
+
+    document.body.addEventListener('click', () => {
+      if (activeCard) {
+        activeCard.classList.remove('zoomed');
+        activeCard = null;
+      }
+    });
+  </script>
 </body>
 </html>
