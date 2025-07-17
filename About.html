@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About Marcus Wright | Match Winners</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
-
     * {
       margin: 0;
       padding: 0;
@@ -15,30 +15,23 @@
     }
 
     body {
-      display: flex;
-      flex-direction: column;
-      background: #000 url('Match_Winners_Final_4k.png') no-repeat center bottom;
-      background-size: cover; /* Cover prevents gaps */
-      font-family: Arial, sans-serif;
-      position: relative;
-      background: linear-gradient(160deg, #000 0%, #0a0a23 100%);
+      background:
+        linear-gradient(160deg, #000 0%, #0a0a23 100%),
+        url('Match_Winners_Final_4k.png') no-repeat center bottom;
+      background-size: cover;
       color: #fff;
       min-height: 100vh;
-      padding: 80px 20px 60px;
+      padding: 100px 20px 60px;
       line-height: 1.6;
       overflow-x: hidden;
       scroll-behavior: smooth;
       position: relative;
-      
     }
 
     body::before {
       content: "";
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      top: 0; left: 0; right: 0; bottom: 0;
       background: url('https://www.transparenttextures.com/patterns/stardust.png');
       opacity: 0.07;
       z-index: 0;
@@ -47,12 +40,13 @@
 
     nav {
       position: fixed;
-      top: 20px;
+      top: 0;
+      left: 0;
       width: 100%;
       text-align: center;
       z-index: 1000;
       background: rgba(0, 0, 0, 0.4);
-      padding: 10px 0;
+      padding: 15px 0;
       backdrop-filter: blur(10px);
     }
 
@@ -66,10 +60,12 @@
       transition: all 0.3s ease-in-out;
     }
 
-    nav a:hover {
+    nav a:hover,
+    nav a:focus {
       text-decoration: underline;
       color: #fff;
       text-shadow: 0 0 12px #00f0ff, 0 0 20px #0ff;
+      outline: none;
     }
 
     h1, h2 {
@@ -135,9 +131,29 @@
     }
 
     @media (max-width: 768px) {
-      h1 { font-size: 28px; }
-      p { font-size: 16px; }
-      nav a { font-size: 14px; }
+      h1 {
+        font-size: 26px;
+        line-height: 1.3;
+      }
+
+      h2 {
+        font-size: 20px;
+        margin-bottom: 20px;
+      }
+
+      p {
+        font-size: 15px;
+      }
+
+      nav a {
+        display: block;
+        margin: 5px 0;
+        font-size: 14px;
+      }
+
+      nav {
+        padding: 10px;
+      }
     }
   </style>
 </head>
@@ -152,224 +168,42 @@
 
   <h1>About Marcus Wright</h1>
 
-  <div class="section">
+  <section class="section">
     <p>
-      <span class="highlight">Marcus Wright</span> is a highly experienced elite football coach with a proven track record at
-      <span class="highlight">Tottenham Hotspur</span> and a nine-year legacy at <span class="highlight">Arsenal FC</span>.
-      Known for developing match winners, Marcus combines modern coaching science with deep game understanding.
+      <span class="highlight">Marcus Wright</span> is a highly experienced elite football coach with a proven track record at imrpoving players holistic growth. with experience at 
+      <span class="highlight">Tottenham Hotspur</span> and ten years of learning from arsenal methodology across various departments.at 
+      <span class="highlight">Arsenal FC</span>. Known for developing match winners, Marcus combines modern coaching , social science with deep game understanding.
     </p>
-  </div>
+  </section>
 
-  <div class="section">
+  <section class="section">
     <h2>Mission</h2>
     <p>
-      To empo<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About Marcus Wright | Match Winners</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Orbitron', sans-serif;
-    }
-
-    body {
-  background:
-    linear-gradient(160deg, #000 0%, #0a0a23 100%),
-    url('Match_Winners_Final_4k.png') no-repeat center bottom;
-  background-size: cover;
-  color: #fff;
-
-  min-height: 100vh;
-  padding: 80px 20px 60px;
-  line-height: 1.6;
-  overflow-x: hidden;
-  scroll-behavior: smooth;
-  position: relative;
-   }
-
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url('https://www.transparenttextures.com/patterns/stardust.png');
-      opacity: 0.07;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    nav {
-      position: fixed;
-      top: 20px;
-      width: 100%;
-      text-align: center;
-      z-index: 1000;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 10px 0;
-      backdrop-filter: blur(10px);
-    }
-
-    nav a {
-      margin: 0 15px;
-      color: #00f0ff;
-      font-weight: bold;
-      text-decoration: none;
-      font-size: 16px;
-      text-shadow: 0 0 8px #00f0ff;
-      transition: all 0.3s ease-in-out;
-    }
-
-    nav a:hover {
-      text-decoration: underline;
-      color: #fff;
-      text-shadow: 0 0 12px #00f0ff, 0 0 20px #0ff;
-    }
-
-    h1, h2 {
-      text-align: center;
-      text-transform: uppercase;
-      color: #00f0ff;
-      text-shadow: 0 0 12px #00f0ff;
-      margin-bottom: 30px;
-      animation: fadeIn 2s ease forwards;
-      position: relative;
-    }
-
-    h1::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -50%;
-      width: 200%;
-      height: 100%;
-      background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
-      transform: rotate(25deg);
-      animation: shine 4s infinite;
-    }
-
-    .section {
-      max-width: 1000px;
-      margin: 0 auto 80px auto;
-      padding: 40px 20px;
-      border-bottom: 1px solid rgba(0, 255, 255, 0.2);
-      transform: translateY(40px);
-      opacity: 0;
-      animation: slideUp 1.5s ease forwards;
-    }
-
-    .section:nth-of-type(2) { animation-delay: 0.3s; }
-    .section:nth-of-type(3) { animation-delay: 0.6s; }
-    .section:nth-of-type(4) { animation-delay: 0.9s; }
-
-    p {
-      font-size: 18px;
-      color: #e0e0e0;
-      text-align: center;
-    }
-
-    .highlight {
-      color: #00f0ff;
-      font-weight: bold;
-      text-shadow: 0 0 8px #00f0ff;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes slideUp {
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    @keyframes shine {
-      0% { transform: translateX(-100%) rotate(25deg); }
-      100% { transform: translateX(100%) rotate(25deg); }
-    }
-
-    @media (max-width: 768px) {
-      h1 { font-size: 28px; }
-      p { font-size: 16px; }
-      nav a { font-size: 14px; }
-    }
-  </style>
-</head>
-<body>
-
-  <nav>
-    <a href="index.html">HOME</a>
-    <a href="Services.html">SERVICES</a>
-    <a href="Testimonials.html">TESTIMONIALS</a>
-    <a href="Contact.html">CONTACT</a>
-  </nav>
-
-  <h1>About Marcus Wright</h1>
-
-  <div class="section">
-    <p>
-      <span class="highlight">Marcus Wright</span> is a highly experienced elite football coach with a proven track record at
-      <span class="highlight">Tottenham Hotspur</span> and a nine-year legacy at <span class="highlight">Arsenal FC</span>.
-      Known for developing match winners, Marcus combines modern coaching science with deep game understanding.
+      To empower young players with the tools, mindset, and confidence to thrive in real-game situations — whether they aim for grassroots success or academy level breakthroughs.
     </p>
-  </div>
+  </section>
 
-  <div class="section">
-    <h2>Mission</h2>
-    <p>
-      To empower young players with the tools, mindset, and confidence to thrive in real-game situations — 
-      whether they aim for grassroots success or academy level breakthroughs.
-    </p>
-  </div>
-
-  <div class="section">
+  <section class="section">
     <h2>Approach</h2>
     <p>
-      Marcus’s coaching blends <span class="highlight">technical development</span>, 
-      <span class="highlight">decision-making</span>, and 
-      <span class="highlight">psychological resilience</span>.
-      His sessions focus on <span class="highlight">decisive moments</span> and game-winning actions.
+      Marcus’s coaching blends <span class="highlight">technical development</span>, <span class="highlight">decision-making</span>, and 
+      <span class="highlight">game resilience</span>. His sessions focus on <span class="highlight">decisive moments</span> and game-winning actions.
     </p>
-  </div>
+  </section>
 
-  <div class="section">
+  <section class="section">
     <h2>Trusted by Families</h2>
     <p>
       Hundreds of players and parents trust Marcus to bring the best out of young footballers — both on and off the pitch.
     </p>
-  </div>
-
-</body>
-</html>
-wer young players with the tools, mindset, and confidence to thrive in real-game situations — 
-      whether they aim for grassroots success or academy level breakthroughs.
-    </p>
-  </div>
-
-  <div class="section">
-    <h2>Approach</h2>
-    <p>
-      Marcus’s coaching blends <span class="highlight">technical development</span>, 
-      <span class="highlight">decision-making</span>, and 
-      <span class="highlight">psychological resilience</span>.
-      His sessions focus on <span class="highlight">decisive moments</span> and game-winning actions.
-    </p>
-  </div>
-
-  <div class="section">
-    <h2>Trusted by Families</h2>
-    <p>
-      Hundreds of players and parents trust Marcus to bring the best out of young footballers — both on and off the pitch.
-    </p>
-  </div>
-
+  </section>
+<section class="section">
+  <h2>Charity & Impact</h2>
+  <p>
+    Off the pitch, Marcus is proud to be an ambassador and mentor for <span class="highlight">Teens Unite</span> having been diagnosed with stage 4 cancer at the age of 15 followed by 18 months of chemotherapy and radiotherapy marcus was determined to give back and help people that have gone through similar and worse. teens unite — a charity supporting young people living with and beyond cancer. 
+    Through a series of high-impact events, Marcus has helped raise over 
+    <span class="highlight">£500,000</span> to empower teens through sport, purpose, and community.
+  </p>
+</section>
 </body>
 </html>
