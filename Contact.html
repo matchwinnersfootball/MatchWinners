@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact | Match Winners</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    body {
+      background:
+        linear-gradient(160deg, #000 0%, #0a0a23 100%),
+        url('Match_Winners_Final_4k.png') no-repeat center bottom;
+      background-size: cover;
+      color: #fff;
+      min-height: 100vh;
+      padding: 100px 20px 60px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: url('https://www.transparenttextures.com/patterns/stardust.png');
+      opacity: 0.07;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 15px 0;
+      backdrop-filter: blur(10px);
+    }
+
+    nav a {
+      margin: 0 15px;
+      color: #00f0ff;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 16px;
+      text-shadow: 0 0 8px #00f0ff;
+      transition: all 0.3s ease-in-out;
+    }
+
+    nav a:hover,
+    nav a:focus {
+      text-decoration: underline;
+      color: #fff;
+      text-shadow: 0 0 12px #00f0ff, 0 0 20px #0ff;
+      outline: none;
+    }
+
+    h1 {
+      text-align: center;
+      text-transform: uppercase;
+      color: #00f0ff;
+      text-shadow: 0 0 12px #00f0ff;
+      margin-bottom: 40px;
+      position: relative;
+      font-size: 40px;
+      animation: pulseGlow 2.5s infinite;
+    }
+
+    @keyframes pulseGlow {
+      0%   { text-shadow: 0 0 12px #00f0ff; }
+      50%  { text-shadow: 0 0 24px #00f0ff, 0 0 36px #0ff; }
+      100% { text-shadow: 0 0 12px #00f0ff; }
+    }
+
+    .contact-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(0, 255, 255, 0.2);
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+    }
+
+    .contact-info {
+      font-size: 18px;
+      color: #e0e0e0;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .highlight {
+      color: #00f0ff;
+      font-weight: bold;
+      text-shadow: 0 0 8px #00f0ff;
+    }
+
+    form {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    input, textarea {
+      padding: 12px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      outline: none;
+      transition: background 0.3s ease;
+    }
+
+    input:focus, textarea:focus {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    button {
+      background: #00f0ff;
+      color: #000;
+      padding: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background: #00ffff;
+      transform: scale(1.02);
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 28px;
+      }
+
+      nav a {
+        display: block;
+        margin: 5px 0;
+        font-size: 14px;
+      }
+
+      .contact-info {
+        font-size: 16px;
+      }
+
+      .contact-container {
+        padding: 30px 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html">HOME</a>
+    <a href="Services.html">SERVICES</a>
+    <a href="Testimonials.html">TESTIMONIALS</a>
+    <a href="Contact.html">CONTACT</a>
+  </nav>
+
+  <h1>Contact Marcus Wright</h1>
+
+  <div class="contact-container">
+    <p class="contact-info">
+      📧 <span class="highlight">Email:</span> mw.ent@hotmail.com
+    </p>
+    <p class="contact-info">
+      💬 <span class="highlight">WhatsApp:</span> MatchWinners
+    </p>
+    <p class="contact-info">
+      📸 <span class="highlight">Instagram:</span> <a href="https://instagram.com/MatchWinnersCoaching" target="_blank" class="highlight">@MatchWinnersCoaching</a>
+    </p>
+    <p class="contact-info">
+      📍 <span class="highlight">Location:</span> North & West London or your own training facility.
+    </p>
+
+    <form action="https://formspree.io/f/your-form-id" method="POST">
+      <input type="text" name="name" placeholder="Name" required />
+      <input type="number" name="age" placeholder="Age" min="4" max="19" required />
+      <input type="email" name="email" placeholder="Email" required />
+      <textarea name="message" placeholder="Enquiry..." required></textarea>
+      <button type="submit">Send Enquiry</button>
+    </form>
+  </div>
+
+</body>
+</html>
