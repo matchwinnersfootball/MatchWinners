@@ -31,16 +31,24 @@
 }
 
 body::before {
-  content: "";
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background:
-    linear-gradient(160deg, rgba(0,0,0,0.8) 0%, rgba(10,10,35,0.95) 100%),
-    url('https://www.transparenttextures.com/patterns/stardust.png');
+  background: linear-gradient(160deg, rgba(0,0,0,0.8), rgba(10,10,35,0.95)), url('https://www.transparenttextures.com/patterns/stardust.png');
   background-repeat: repeat;
-  opacity: 0.4;
+  opacity: 0.35;
   z-index: 0;
   pointer-events: none;
+}
+
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+.section {
+  animation: fadeIn 1.2s ease forwards;
+  transform: none;
+}
 }
 
     nav {
