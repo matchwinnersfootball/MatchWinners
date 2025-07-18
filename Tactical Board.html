@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tactical Board | Match Winners</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+  <style>
+    *{box-sizing:border-box;font-family:'Orbitron',sans-serif;user-select:none}
+    body{margin:0;background:#0a0a23;color:#fff;display:flex;flex-direction:column;min-height:100vh}
+    header{padding:10px 20px;background:#111;display:flex;gap:12px;align-items:center;border-bottom:1px solid #00f0ff;z-index:5}
+    button{background:#00f0ff;border:none;padding:8px 14px;border-radius:6px;color:#000;font-weight:700;cursor:pointer;transition:transform .2s}
+    button:hover{transform:scale(1.05)}
+    #fileLoader{display:none}
+
+    /* Pitch */
+    #boardWrapper{flex:1;position:relative;overflow:hidden;background:url('https://raw.githubusercontent.com/footballgraphics/assets/main/pitch9v9_dark.png') center/contain no-repeat;}
+
+    /* Draggable elements */
+    .player{position:absolute;width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#fff;box-shadow:0 0 10px rgba(0,0,0,.6)}
+    .purple{background:#7c3aed}
+    .blue{background:#1d4ed8}
+
+    .arrow{position:absolute;width:80px;height:6px;background:#fff;border-radius:3px;transform-origin:left center;cursor:move}
+    .pass{background:#22c55e}
+    .shoot{background:#ef4444}
+    .cross{background:#fbbf24}
+
+    /* Toolbar */
+    #toolbarToggle{position:absolute;right:15px;top:15px;background:#00f0ff;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#000;cursor:pointer;z-index:6}
+    #toolbar{position:fixed;right:-220px;top:0;width:220px;height:100vh;background:#000d;border-left:1px solid #00f0ff;padding:70px 10px 20px;transition:right .4s ease;display:flex;flex-direction:column;gap:20px;z-index:5;overflow-y:auto}
+    #toolbar.open{right:0}
+    .toolItem{display:flex;align-items:center;gap:8px;background:#111;padding:8px;border-radius:8px;cursor:grab}
+    .toolIcon{width:70px;height:6px;border-radius:3px}
+    .toolLabel{font-size:14px;color:#fff}
+  </style>
+</head>
+<body>
+  <!-- header buttons -->
+  <header>
+    <button id="saveBtn">Save Board</button>
+    <button id="loadBtn">Load Board</button>
+    <input type="file" id="fileLoader" accept="application/json" />
+  </header>
+
+  <!-- pitch -->
+  <div id="boardWrapper"></div>
+
+  <!-- floating toolbar toggle -->
+  <div id="toolbarToggle">≡</div>
+  <aside id="toolbar">
+    <div class="toolItem" data-type="pass">
+      <div class="toolIcon pass"></div><span class="toolLabel">Pass arrow</span>
+    </div>
+    <div class="toolItem" data-type="shoot">
+      <div class="toolIcon shoot"></div><span class="toolLabel">Shoot arrow</span>
+    </div>
+    <div class="toolItem" data-type="cross">
+      <div class="toolIcon cross"></div><span class="toolLabel">Cross arrow</span>
+    </div>
+  </aside>
+
+<script>
+const board=document.getElementById('boardWrapper');
+const toolbar=document.getElementById('toolbar');
+const toggle=document.getElementById('toolbarToggle');
+
+toggle.addEventListener('click',()=>toolbar.classList.toggle('open'));
+
+// create players
+function createPlayer(num,color,x,y){
+  const p=document.createElement('div');
+  p.className=`player draggable ${color}`;
+  p.dataset.type='player';
+  p.dataset.num=num;
+  p.innerText=num;
+  p.style.left=x+'px';
+  p.style.top=y+'px';
+  board.appendChild(p);
+  return p;
+}
+
+// initial positions (just spread horizontally)
+const pitchWidth=window.innerWidth;
+const startY=window.innerHeight/2;
+for(let i=1;i<=11;i++){
+ createPlayer(i,'purple',20, 60+ i*50);
+ createPlayer(i,'blue',pitchWidth-70, 60+ i*50);
+}
+
+// Interact setup for existing elements
+interact('.draggable').draggable({
+  listeners:{
+    start (event){},
+    move (event){
+      const target=event.target;
+      const x=(parseFloat(target.dataset.x)||0)+event.dx;
+      const y=(parseFloat(target.dataset.y)||0)+event.dy;
+      target.style.transform=`translate(${x}px,${y}px)`;
+      target.dataset.x=x;target.dataset.y=y;
+    }
+  }
+});
+
+// Toolbar drag: clone on dragstart
+interact('.toolItem').draggable({
+  listeners:{
+    start(event){
+      const type=event.target.dataset.type;
+      const newArrow=document.createElement('div');
+      newArrow.className=`arrow draggable ${type}`;
+      newArrow.dataset.type=type;
+      board.appendChild(newArrow);
+      event.interactable=newArrow;
+      event.target.__clone=newArrow;
+    },
+    move(event){
+      const clone=event.target.__clone;
+      const x=(parseFloat(clone.dataset.x)||0)+event.dx;
+      const y=(parseFloat(clone.dataset.y)||0)+event.dy;
+      clone.style.left=(parseFloat(clone.style.left)||event.clientX-board.offsetLeft)+'px';
+      clone.style.top=(parseFloat(clone.style.top)||event.clientY-board.offsetTop)+'px';
+      clone.style.transform=`translate(${x}px,${y}px)`;
+      clone.dataset.x=x;clone.dataset.y=y;
+    }
+  },
+  inertia:true,
+  modifiers:[
+    interact.modifiers.restrict({restriction:board,endOnly:true})
+  ]
+});
+
+// Make dynamically created arrows & players draggable too
+const observer=new MutationObserver(muts=>{
+  muts.forEach(m=>{
+    m.addedNodes.forEach(node=>{
+      if(node.classList&&node.classList.contains('draggable')){
+        interact(node).draggable({
+          listeners:{move(event){
+            const t=event.target;
+            const x=(parseFloat(t.dataset.x)||0)+event.dx;
+            const y=(parseFloat(t.dataset.y)||0)+event.dy;
+            t.style.transform=`translate(${x}px,${y}px)`;
+            t.dataset.x=x;t.dataset.y=y;
+          }}
+        });
+      }
+    })
+  })
+});
+observer.observe(board,{childList:true});
+
+// SAVE
+function serializeBoard(){
+  const items=[...board.querySelectorAll('.player,.arrow')].map(el=>{
+    const rect=el.getBoundingClientRect();
+    return{
+      type:el.dataset.type||'player',
+      num:el.dataset.num||null,
+      class:el.className,
+      x:rect.left-board.getBoundingClientRect().left,
+      y:rect.top-board.getBoundingClientRect().top,
+      tx:parseFloat(el.dataset.x)||0,
+      ty:parseFloat(el.dataset.y)||0
+    }
+  });
+  return JSON.stringify(items);
+}
+
+document.getElementById('saveBtn').addEventListener('click',()=>{
+  const data=serializeBoard();
+  const blob=new Blob([data],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='tactics_board.json';a.click();URL.revokeObjectURL(url);
+});
+
+// LOAD
+const fileLoader=document.getElementById('fileLoader');
+document.getElementById('loadBtn').addEventListener('click',()=>fileLoader.click());
+fileLoader.addEventListener('change',e=>{
+  const file=e.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=evt=>{
+    const arr=JSON.parse(evt.target.result);
+    board.innerHTML='';
+    arr.forEach(item=>{
+      let el;
+      if(item.type==='player'){
+        el=createPlayer(item.num,item.class.includes('purple')?'purple':'blue',item.x,item.y);
+      }else{
+        el=document.createElement('div');
+        el.className=item.class;
+        el.dataset.type=item.type;
+        el.style.left=item.x+'px';
+        el.style.top=item.y+'px';
+        board.appendChild(el);
+      }
+      el.dataset.x=item.tx;el.dataset.y=item.ty;
+      el.style.transform=`translate(${item.tx}px,${item.ty}px)`;
+    })
+  };
+  reader.readAsText(file);
+});
+</script>
+</body>
+</html>
