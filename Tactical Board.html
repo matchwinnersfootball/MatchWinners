@@ -4,235 +4,188 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tactical Board</title>
+
+  <!-- Orbitron for consistency with the rest of your site -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet"/>
+
   <style>
+    * { box-sizing: border-box; user-select: none; font-family: "Orbitron", sans-serif; }
+
     body {
       margin: 0;
-      background: #111;
-      font-family: Arial, sans-serif;
+      background: #0d0d0d;
       overflow: hidden;
-    }
-    .toolbar {
-      position: fixed;
-      top: 10px;
-      left: 10px;
-      z-index: 1000;
-    }
-    .toolbar button {
-      margin: 5px;
-      padding: 10px;
-      background: #00f0ff;
-      color: black;
-      border: none;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .toolbox-toggle {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      z-index: 1000;
-      background: #00f0ff;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      font-size: 24px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-    }
-    .toolbox {
-      position: fixed;
-      top: 60px;
-      right: -200px;
-      width: 180px;
-      background: rgba(0, 0, 0, 0.8);
-      border: 1px solid #00f0ff;
-      padding: 10px;
-      transition: right 0.3s ease-in-out;
-      z-index: 1000;
-    }
-    .toolbox.open {
-      right: 10px;
-    }
-    .toolbox div {
-      background: #444;
       color: #fff;
-      padding: 8px;
-      margin: 5px 0;
-      text-align: center;
-      cursor: grab;
-      user-select: none;
     }
-    .pitch {
+
+    /* --- Top toolbar ---------------------------------------------------- */
+    #toolbar {
+      position: fixed;
+      top: 10px; left: 10px;
+      z-index: 5;
+      display: flex; gap: 8px;
+    }
+    button {
+      background: #00f0ff;
+      color: #000;
+      border: none;
+      padding: 8px 14px;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover { filter: brightness(1.1); }
+
+    /* --- Pitch area ----------------------------------------------------- */
+    #board {
       position: relative;
       width: 100vw;
       height: 100vh;
-      background: url('—Pngtree—football pitch vector illustration design_6391956.png') no-repeat center center;
-      background-size: contain;
+      background: url('—Pngtree—football pitch vector illustration design_6391956.png')
+                  center center / contain no-repeat;
     }
+
+    /* --- Players -------------------------------------------------------- */
     .player {
       position: absolute;
-      width: 40px;
-      height: 40px;
+      width: 42px; height: 42px;
       border-radius: 50%;
-      color: white;
-      font-weight: bold;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: move;
-      z-index: 10;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 700;
+      cursor: pointer;                        /* tap / click */
+      transition: transform .15s ease;
     }
-    .purple { background: purple; }
-    .blue { background: blue; }
-    .arrow {
-      position: absolute;
-      width: 60px;
-      height: 4px;
-      border-radius: 2px;
-      transform: rotate(0deg);
+    .player.selected { transform: scale(1.25); box-shadow: 0 0 10px #00f0ff; }
+
+    .purple { background: #7c3aed; }
+    .blue   { background: #2563ff; }
+
+    /* --- Responsive helper --------------------------------------------- */
+    @media (max-width: 650px){
+      .player{width:36px;height:36px;font-size:14px}
     }
-    .pass { background: lime; }
-    .shoot { background: red; }
-    .cross { background: gold; }
   </style>
 </head>
 <body>
-  <div class="toolbar">
-    <button onclick="saveBoard()">Save Board</button>
-    <button onclick="loadBoard()">Load Board</button>
-  </div>
-  <div class="toolbox-toggle" onclick="toggleToolbox()">≡</div>
-  <div class="toolbox" id="toolbox">
-    <div draggable="true" ondragstart="startArrowDrag(event, 'pass')">Pass</div>
-    <div draggable="true" ondragstart="startArrowDrag(event, 'shoot')">Shoot</div>
-    <div draggable="true" ondragstart="startArrowDrag(event, 'cross')">Cross</div>
-  </div>
-  <div class="pitch" id="pitch"></div>
-  <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
-  <script>
-    const pitch = document.getElementById('pitch');
 
-    function createPlayer(number, team, x, y) {
-      const el = document.createElement('div');
-      el.className = `player ${team}`;
-      el.textContent = number;
-      el.style.left = `${x}px`;
-      el.style.top = `${y}px`;
-      pitch.appendChild(el);
-      interact(el).draggable({
-        listeners: {
-          move(event) {
-            const target = event.target;
-            const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
-            const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
-            target.style.transform = `translate(${x}px, ${y}px)`;
-            target.setAttribute('data-x', x);
-            target.setAttribute('data-y', y);
-          }
-        }
-      });
-    }
+<!-- toolbar -->
+<div id="toolbar">
+  <button id="saveBtn">Save Board</button>
+  <button id="loadBtn">Load Board</button>
+  <input type="file" id="fileInput" accept="application/json" style="display:none" />
+</div>
 
-    for (let i = 1; i <= 11; i++) {
-      createPlayer(i, 'purple', 20, i * 50);
-      createPlayer(i, 'blue', window.innerWidth - 60, i * 50);
-    }
+<!-- pitch -->
+<div id="board"></div>
 
-    function toggleToolbox() {
-      document.getElementById('toolbox').classList.toggle('open');
-    }
+<script>
+/* -------------------------------------------------------------
+   1.  Create 11 purple + 11 blue players down each sideline
+----------------------------------------------------------------*/
+const board = document.getElementById("board");
+const SIDE_PADDING = 15;
+const ROW_GAP = 50;
 
-    function startArrowDrag(event, type) {
-      event.dataTransfer.setData('arrowType', type);
-    }
+function spawnPlayer(num, color, x, y){
+  const p = document.createElement("div");
+  p.className = `player ${color}`;
+  p.textContent = num;
+  p.style.left = x + "px";
+  p.style.top  = y + "px";
+  p.dataset.x = 0;             // translate offset
+  p.dataset.y = 0;
+  p.dataset.num = num;
+  board.appendChild(p);
+  return p;
+}
 
-    pitch.ondragover = e => e.preventDefault();
-    pitch.ondrop = function (e) {
-      const type = e.dataTransfer.getData('arrowType');
-      if (type) {
-        const el = document.createElement('div');
-        el.className = `arrow ${type}`;
-        el.style.left = `${e.clientX - 30}px`;
-        el.style.top = `${e.clientY - 2}px`;
-        pitch.appendChild(el);
-        interact(el).draggable({
-          listeners: {
-            move(event) {
-              const target = event.target;
-              const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
-              const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
-              target.style.transform = `translate(${x}px, ${y}px)`;
-              target.setAttribute('data-x', x);
-              target.setAttribute('data-y', y);
-            }
-          }
-        });
-      }
-    }
+const boardRect = board.getBoundingClientRect();
+for(let i=1;i<=11;i++){
+  spawnPlayer(i,"purple",SIDE_PADDING, i*ROW_GAP);
+  spawnPlayer(i,"blue", boardRect.width - SIDE_PADDING - 42, i*ROW_GAP);
+}
 
-    function saveBoard() {
-      const items = [...document.querySelectorAll('.player, .arrow')].map(el => {
-        return {
-          class: el.className,
-          x: parseFloat(el.getAttribute('data-x')) || 0,
-          y: parseFloat(el.getAttribute('data-y')) || 0,
-          text: el.textContent
-        };
-      });
-      const blob = new Blob([JSON.stringify(items)], { type: 'application/json' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'tactics_board.json';
-      a.click();
-    }
+/* -------------------------------------------------------------
+   2.  Tap‑to‑pick‑up, tap‑to‑drop logic
+----------------------------------------------------------------*/
+let selected = null;
 
-    function loadBoard() {
-      const input = document.createElement('input');
-      input.type = 'file';
-      input.accept = '.json';
-      input.onchange = e => {
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.onload = () => {
-          pitch.innerHTML = '';
-          const data = JSON.parse(reader.result);
-          data.forEach(obj => {
-            if (obj.class.includes('player')) {
-              createPlayer(obj.text, obj.class.includes('purple') ? 'purple' : 'blue', 0, 0);
-              const el = pitch.lastChild;
-              el.style.transform = `translate(${obj.x}px, ${obj.y}px)`;
-              el.setAttribute('data-x', obj.x);
-              el.setAttribute('data-y', obj.y);
-            } else {
-              const el = document.createElement('div');
-              el.className = obj.class;
-              el.style.left = '0px';
-              el.style.top = '0px';
-              el.style.transform = `translate(${obj.x}px, ${obj.y}px)`;
-              el.setAttribute('data-x', obj.x);
-              el.setAttribute('data-y', obj.y);
-              pitch.appendChild(el);
-              interact(el).draggable({
-                listeners: {
-                  move(event) {
-                    const target = event.target;
-                    const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
-                    const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
-                    target.style.transform = `translate(${x}px, ${y}px)`;
-                    target.setAttribute('data-x', x);
-                    target.setAttribute('data-y', y);
-                  }
-                }
-              });
-            }
-          });
-        };
-        reader.readAsText(file);
-      };
-      input.click();
+board.addEventListener("click", e => {
+  // Clicked on an existing player?
+  if(e.target.classList.contains("player")){
+    // 2a. If nothing selected → pick this one
+    if(!selected){
+      selected = e.target;
+      selected.classList.add("selected");
     }
-  </script>
+    // 2b. If same player tapped again → unselect
+    else if(selected === e.target){
+      selected.classList.remove("selected");
+      selected = null;
+    }
+    // 2c. Different player tapped while holding one → swap positions
+    else {
+      const { left: x, top: y } = e.target.getBoundingClientRect();
+      const { left: sx, top: sy } = selected.getBoundingClientRect();
+      // swap CSS positions
+      selected.style.left = x - boardRect.left + "px";
+      selected.style.top  = y - boardRect.top  + "px";
+      e.target.style.left = sx - boardRect.left + "px";
+      e.target.style.top  = sy - boardRect.top  + "px";
+      selected.classList.remove("selected");
+      selected = null;
+    }
+  }
+  // Clicked empty pitch while holding a player → drop there
+  else if(selected){
+    const clickX = e.clientX - boardRect.left - 21; // center circle
+    const clickY = e.clientY - boardRect.top  - 21;
+    selected.style.left = clickX + "px";
+    selected.style.top  = clickY + "px";
+    selected.classList.remove("selected");
+    selected = null;
+  }
+});
+
+/* -------------------------------------------------------------
+   3.  Save / Load (download & upload JSON)
+----------------------------------------------------------------*/
+function collectPositions(){
+  return [...document.querySelectorAll(".player")].map(el => ({
+    num: el.dataset.num,
+    color: el.classList.contains("purple") ? "purple" : "blue",
+    x: parseFloat(el.style.left),
+    y: parseFloat(el.style.top)
+  }));
+}
+
+document.getElementById("saveBtn").onclick = () => {
+  const blob = new Blob([JSON.stringify(collectPositions())],
+                        {type:"application/json"});
+  const a = Object.assign(document.createElement("a"), {
+      href: URL.createObjectURL(blob),
+      download: "tactics_board.json"
+  });
+  a.click();
+  URL.revokeObjectURL(a.href);
+};
+
+document.getElementById("loadBtn").onclick =
+  () => document.getElementById("fileInput").click();
+
+document.getElementById("fileInput").addEventListener("change", e=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = evt=>{
+    const data = JSON.parse(evt.target.result);
+    board.innerHTML = "";      // clear current players
+    data.forEach(p=>{
+      spawnPlayer(p.num, p.color, p.x, p.y);
+    });
+  };
+  reader.readAsText(file);
+});
+</script>
 </body>
 </html>
