@@ -70,7 +70,7 @@
     nav a:focus {
       text-decoration: underline;
       color: #fff;
-      text-shadow: 0 0 12px #00f0ff, 0 0 20px #0ff;
+      text-shadow: 0 0 20px #00f0ff, 0 0 30px #0ff;
       outline: none;
     }
 
@@ -78,7 +78,7 @@
       text-align: center;
       text-transform: uppercase;
       color: #00f0ff;
-      text-shadow: 0 0 12px #00f0ff;
+      text-shadow: 0 0 12px #00f0ff, 0 0 25px #00f0ff;
       margin-bottom: 30px;
       animation: glowIn 1.5s ease forwards;
       position: relative;
@@ -91,9 +91,9 @@
       left: -50%;
       width: 200%;
       height: 100%;
-      background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+      background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
       transform: rotate(25deg);
-      animation: shine 4s infinite;
+      animation: shine 3s infinite;
     }
 
     .section {
@@ -102,12 +102,18 @@
       padding: 40px 20px;
       border-radius: 16px;
       background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
       transform: translateY(50px);
       opacity: 0;
       animation: slideFrosted 1.6s ease forwards;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .section:hover {
+      transform: translateY(0) scale(1.03);
+      box-shadow: 0 0 60px rgba(0, 255, 255, 0.6);
     }
 
     p {
@@ -115,13 +121,18 @@
       color: #e0e0e0;
       text-align: center;
       line-height: 1.8;
-      text-shadow: 0 0 6px rgba(0,0,0,0.6);
+      text-shadow: 0 0 8px rgba(0,0,0,0.7);
+      transition: transform 0.3s ease;
+    }
+
+    .section:hover p {
+      transform: scale(1.02);
     }
 
     .highlight {
       color: #00f0ff;
       font-weight: bold;
-      text-shadow: 0 0 10px #00f0ff;
+      text-shadow: 0 0 12px #00f0ff;
     }
 
     @keyframes glowIn {
@@ -131,13 +142,13 @@
       }
       to {
         opacity: 1;
-        text-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff;
+        text-shadow: 0 0 20px #00f0ff, 0 0 40px #00f0ff;
       }
     }
 
     @keyframes slideFrosted {
       0% {
-        transform: translateY(50px);
+        transform: translateY(80px);
         opacity: 0;
         background: rgba(0, 0, 0, 0);
         backdrop-filter: blur(0px);
@@ -146,7 +157,7 @@
         transform: translateY(0);
         opacity: 1;
         background: rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(6px);
+        backdrop-filter: blur(8px);
       }
     }
 
