@@ -1,9 +1,9 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About Marcus Wright | Match Winners</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
   <style>
     * {
@@ -11,70 +11,193 @@
       padding: 0;
       box-sizing: border-box;
       font-family: 'Orbitron', sans-serif;
-    }html, body {
-  height: 100%;
-  overflow-x: hidden;
-  scroll-behavior: smooth;
-}
+    }
 
-body {
-  background: #000;
-  background-image: url('Match_Winners_Final_4k.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  color: #fff;
-  min-height: 100vh;
-  padding: 100px 20px 60px;
-  line-height: 1.6;
-  position: relative;
-  z-index: 0;
-}
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
 
-body::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(160deg, rgba(0,0,0,0.8), rgba(10,10,35,0.95)), url('https://www.transparenttextures.com/patterns/stardust.png');
-  background-repeat: repeat;
-  opacity: 0.4;
-  z-index: 0;
-  pointer-events: none;
-}
+    body {
+      background: #000;
+      background-image: url('Match_Winners_Final_4k.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: #fff;
+      min-height: 100vh;
+      padding: 100px 20px 60px;
+      line-height: 1.6;
+      position: relative;
+      z-index: 0;
+    }
 
-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  text-align: center;
-  z-index: 1000;
-  background: rgba(0, 0, 0, 0.4);
-  padding: 15px 0;
-  backdrop-filter: blur(10px);
-}
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(160deg, rgba(0,0,0,0.8), rgba(10,10,35,0.95)), url('https://www.transparenttextures.com/patterns/stardust.png');
+      background-repeat: repeat;
+      opacity: 0.4;
+      z-index: 0;
+      pointer-events: none;
+    }
 
-nav a {
-  margin: 0 15px;
-  color: #00f0ff;
-  font-weight: bold;
-  text-decoration: none;
-  font-size: 16px;
-  text-shadow: 0 0 8px #00f0ff;
-  transition: all 0.3s ease-in-out;
-}
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 15px 0;
+      backdrop-filter: blur(10px);
+    }
 
-nav a:hover, nav a:focus {
-  text-decoration: underline;
-  color: #fff;
-  text-shadow: 0 0 12px #00f0ff, 0 0 20px #0ff;
-  outline: none;
-}
+    nav a {
+      margin: 0 15px;
+      color: #00f0ff;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 16px;
+      text-shadow: 0 0 8px #00f0ff;
+      transition: all 0.3s ease-in-out;
+    }
 
-h1, h2 {
-  text-align: center;
-  text-transform: uppercase;
-  color: #00f0ff;
-  text-shadow
+    nav a:hover,
+    nav a:focus {
+      text-decoration: underline;
+      color: #fff;
+      text-shadow: 0 0 12px #00f0ff, 0 0 20px #0ff;
+      outline: none;
+    }
 
-  
+    h1, h2 {
+      text-align: center;
+      text-transform: uppercase;
+      color: #00f0ff;
+      text-shadow: 0 0 12px #00f0ff;
+      margin-bottom: 30px;
+      animation: glowIn 1.5s ease forwards;
+      position: relative;
+    }
+
+    h1::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -50%;
+      width: 200%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+      transform: rotate(25deg);
+      animation: shine 4s infinite;
+    }
+
+    .section {
+      max-width: 1000px;
+      margin: 0 auto 80px auto;
+      padding: 40px 20px;
+      border-radius: 16px;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+      transform: translateY(50px);
+      opacity: 0;
+      animation: slideFrosted 1.6s ease forwards;
+    }
+
+    p {
+      font-size: 18px;
+      color: #e0e0e0;
+      text-align: center;
+      line-height: 1.8;
+      text-shadow: 0 0 6px rgba(0,0,0,0.6);
+    }
+
+    .highlight {
+      color: #00f0ff;
+      font-weight: bold;
+      text-shadow: 0 0 10px #00f0ff;
+    }
+
+    @keyframes glowIn {
+      from {
+        opacity: 0;
+        text-shadow: 0 0 0px #00f0ff;
+      }
+      to {
+        opacity: 1;
+        text-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff;
+      }
+    }
+
+    @keyframes slideFrosted {
+      0% {
+        transform: translateY(50px);
+        opacity: 0;
+        background: rgba(0, 0, 0, 0);
+        backdrop-filter: blur(0px);
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(6px);
+      }
+    }
+
+    @keyframes shine {
+      0% { transform: translateX(-100%) rotate(25deg); }
+      100% { transform: translateX(100%) rotate(25deg); }
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 26px; line-height: 1.3; }
+      h2 { font-size: 20px; margin-bottom: 20px; }
+      p { font-size: 15px; }
+      nav a { display: block; margin: 5px 0; font-size: 14px; }
+      nav { padding: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html">HOME</a>
+    <a href="Services.html">SERVICES</a>
+    <a href="Testimonials.html">TESTIMONIALS</a>
+    <a href="Contact.html">CONTACT</a>
+  </nav>
+
+  <h1>About Marcus Wright</h1>
+
+  <section class="section">
+    <p><span class="highlight">Marcus Wright</span> is a highly experienced elite football coach with a proven track record in improving players’ holistic growth. With experience at <span class="highlight">Tottenham Hotspur</span> and ten years of learning from the methodology at <span class="highlight">Arsenal FC</span>, Marcus is known for developing match winners through modern coaching, social science, and deep tactical understanding.</p>
+  </section>
+
+  <section class="section">
+    <h2>Mission</h2>
+    <p>To empower young players with the tools, mindset, and confidence to thrive in real-game situations — whether they aim for grassroots success or academy-level breakthroughs.</p>
+  </section>
+
+  <section class="section">
+    <h2>Approach</h2>
+    <p>Marcus’s coaching blends <span class="highlight">technical development</span>, <span class="highlight">decision-making</span>, and <span class="highlight">game resilience</span>. His sessions focus on <span class="highlight">decisive moments</span> and game-winning actions.</p>
+  </section>
+
+  <section class="section">
+    <h2>Trusted by Families</h2>
+    <p>Hundreds of players and parents trust Marcus to bring the best out of young footballers — both on and off the pitch.</p>
+  </section>
+
+  <section class="section">
+    <h2>Charity & Impact</h2>
+    <p>Off the pitch, Marcus is proud to be an ambassador and mentor for <span class="highlight">Teens Unite</span>. Having been diagnosed with stage 4 cancer at 15 and undergoing 18 months of treatment, Marcus is determined to give back. Through a series of high-impact events, he has helped raise over <span class="highlight">£500,000</span> to empower teens through sport, purpose, and community.</p>
+  </section>
+
+</body>
+</html>
