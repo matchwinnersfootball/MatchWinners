@@ -4,188 +4,218 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tactical Board</title>
-
-  <!-- Orbitron for consistency with the rest of your site -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet"/>
-
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
   <style>
-    * { box-sizing: border-box; user-select: none; font-family: "Orbitron", sans-serif; }
+    * {
+      box-sizing: border-box;
+      font-family: 'Orbitron', sans-serif;
+      user-select: none;
+    }
 
     body {
       margin: 0;
       background: #0d0d0d;
-      overflow: hidden;
       color: #fff;
+      overflow: hidden;
     }
 
-    /* --- Top toolbar ---------------------------------------------------- */
     #toolbar {
       position: fixed;
-      top: 10px; left: 10px;
-      z-index: 5;
-      display: flex; gap: 8px;
+      top: 10px;
+      left: 10px;
+      z-index: 10;
+      display: flex;
+      gap: 8px;
+      flex-direction: column;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 12px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #00f0ff;
     }
-    button {
+
+    .tool {
       background: #00f0ff;
       color: #000;
       border: none;
-      padding: 8px 14px;
+      padding: 6px 10px;
       font-weight: 700;
       border-radius: 6px;
       cursor: pointer;
+      transition: 0.2s;
     }
-    button:hover { filter: brightness(1.1); }
+    .tool:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 10px #00f0ff;
+    }
 
-    /* --- Pitch area ----------------------------------------------------- */
     #board {
       position: relative;
-      width: 100vw;
-      height: 100vh;
-      background: url('—Pngtree—football pitch vector illustration design_6391956.png')
-                  center center / contain no-repeat;
+      width: min(95vw, 1200px);
+      aspect-ratio: 2 / 1;
+      margin: 60px auto 0;
+      background: url('—Pngtree—football pitch vector illustration design_6391956.png') center / cover no-repeat;
+      border: 2px solid #00f0ff;
+      border-radius: 8px;
     }
 
-    /* --- Players -------------------------------------------------------- */
     .player {
       position: absolute;
-      width: 42px; height: 42px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      color: #fff; font-weight: 700;
-      cursor: pointer;                        /* tap / click */
-      transition: transform .15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s;
     }
-    .player.selected { transform: scale(1.25); box-shadow: 0 0 10px #00f0ff; }
+    .player.selected {
+      transform: scale(1.3);
+      box-shadow: 0 0 12px #fff;
+    }
+    .purple {
+      background: #7c3aed;
+    }
+    .blue {
+      background: #2563ff;
+    }
 
-    .purple { background: #7c3aed; }
-    .blue   { background: #2563ff; }
-
-    /* --- Responsive helper --------------------------------------------- */
-    @media (max-width: 650px){
-      .player{width:36px;height:36px;font-size:14px}
+    .label {
+      position: absolute;
+      color: #00f0ff;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 4px 8px;
+      font-size: 12px;
+      border-radius: 4px;
     }
   </style>
 </head>
 <body>
+  <div id="toolbar">
+    <button class="tool" onclick="addLabel('Pass')">Pass</button>
+    <button class="tool" onclick="addLabel('Shoot')">Shoot</button>
+    <button class="tool" onclick="addLabel('Cross')">Cross</button>
+    <button class="tool" id="saveBtn">Save</button>
+    <button class="tool" id="loadBtn">Load</button>
+    <input type="file" id="fileInput" accept="application/json" hidden />
+  </div>
 
-<!-- toolbar -->
-<div id="toolbar">
-  <button id="saveBtn">Save Board</button>
-  <button id="loadBtn">Load Board</button>
-  <input type="file" id="fileInput" accept="application/json" style="display:none" />
-</div>
+  <div id="board"></div>
 
-<!-- pitch -->
-<div id="board"></div>
+  <script>
+    const board = document.getElementById('board');
+    const fileInput = document.getElementById('fileInput');
+    let selected = null;
 
-<script>
-/* -------------------------------------------------------------
-   1.  Create 11 purple + 11 blue players down each sideline
-----------------------------------------------------------------*/
-const board = document.getElementById("board");
-const SIDE_PADDING = 15;
-const ROW_GAP = 50;
-
-function spawnPlayer(num, color, x, y){
-  const p = document.createElement("div");
-  p.className = `player ${color}`;
-  p.textContent = num;
-  p.style.left = x + "px";
-  p.style.top  = y + "px";
-  p.dataset.x = 0;             // translate offset
-  p.dataset.y = 0;
-  p.dataset.num = num;
-  board.appendChild(p);
-  return p;
-}
-
-const boardRect = board.getBoundingClientRect();
-for(let i=1;i<=11;i++){
-  spawnPlayer(i,"purple",SIDE_PADDING, i*ROW_GAP);
-  spawnPlayer(i,"blue", boardRect.width - SIDE_PADDING - 42, i*ROW_GAP);
-}
-
-/* -------------------------------------------------------------
-   2.  Tap‑to‑pick‑up, tap‑to‑drop logic
-----------------------------------------------------------------*/
-let selected = null;
-
-board.addEventListener("click", e => {
-  // Clicked on an existing player?
-  if(e.target.classList.contains("player")){
-    // 2a. If nothing selected → pick this one
-    if(!selected){
-      selected = e.target;
-      selected.classList.add("selected");
+    function createPlayer(num, color, x, y) {
+      const el = document.createElement('div');
+      el.className = `player ${color}`;
+      el.textContent = num;
+      el.style.left = `${x}px`;
+      el.style.top = `${y}px`;
+      el.dataset.num = num;
+      el.dataset.color = color;
+      board.appendChild(el);
+      return el;
     }
-    // 2b. If same player tapped again → unselect
-    else if(selected === e.target){
-      selected.classList.remove("selected");
-      selected = null;
+
+    function spawnInitialPlayers() {
+      const rect = board.getBoundingClientRect();
+      for (let i = 1; i <= 11; i++) {
+        createPlayer(i, 'purple', 20, i * 50);
+        createPlayer(i, 'blue', rect.width - 60, i * 50);
+      }
     }
-    // 2c. Different player tapped while holding one → swap positions
-    else {
-      const { left: x, top: y } = e.target.getBoundingClientRect();
-      const { left: sx, top: sy } = selected.getBoundingClientRect();
-      // swap CSS positions
-      selected.style.left = x - boardRect.left + "px";
-      selected.style.top  = y - boardRect.top  + "px";
-      e.target.style.left = sx - boardRect.left + "px";
-      e.target.style.top  = sy - boardRect.top  + "px";
-      selected.classList.remove("selected");
-      selected = null;
+
+    function handleClick(e) {
+      if (e.target.classList.contains('player')) {
+        if (!selected) {
+          selected = e.target;
+          selected.classList.add('selected');
+        } else if (selected === e.target) {
+          selected.classList.remove('selected');
+          selected = null;
+        } else {
+          const tmpLeft = selected.style.left;
+          const tmpTop = selected.style.top;
+          selected.style.left = e.target.style.left;
+          selected.style.top = e.target.style.top;
+          e.target.style.left = tmpLeft;
+          e.target.style.top = tmpTop;
+          selected.classList.remove('selected');
+          selected = null;
+        }
+      } else if (selected) {
+        const rect = board.getBoundingClientRect();
+        selected.style.left = `${e.clientX - rect.left - 21}px`;
+        selected.style.top = `${e.clientY - rect.top - 21}px`;
+        selected.classList.remove('selected');
+        selected = null;
+      }
     }
-  }
-  // Clicked empty pitch while holding a player → drop there
-  else if(selected){
-    const clickX = e.clientX - boardRect.left - 21; // center circle
-    const clickY = e.clientY - boardRect.top  - 21;
-    selected.style.left = clickX + "px";
-    selected.style.top  = clickY + "px";
-    selected.classList.remove("selected");
-    selected = null;
-  }
-});
 
-/* -------------------------------------------------------------
-   3.  Save / Load (download & upload JSON)
-----------------------------------------------------------------*/
-function collectPositions(){
-  return [...document.querySelectorAll(".player")].map(el => ({
-    num: el.dataset.num,
-    color: el.classList.contains("purple") ? "purple" : "blue",
-    x: parseFloat(el.style.left),
-    y: parseFloat(el.style.top)
-  }));
-}
+    function addLabel(type) {
+      const lbl = document.createElement('div');
+      lbl.className = 'label';
+      lbl.textContent = type;
+      lbl.style.left = '50%';
+      lbl.style.top = '50%';
+      board.appendChild(lbl);
+    }
 
-document.getElementById("saveBtn").onclick = () => {
-  const blob = new Blob([JSON.stringify(collectPositions())],
-                        {type:"application/json"});
-  const a = Object.assign(document.createElement("a"), {
-      href: URL.createObjectURL(blob),
-      download: "tactics_board.json"
-  });
-  a.click();
-  URL.revokeObjectURL(a.href);
-};
+    function collectBoardData() {
+      const players = Array.from(document.querySelectorAll('.player')).map(p => ({
+        num: p.dataset.num,
+        color: p.dataset.color,
+        left: p.style.left,
+        top: p.style.top
+      }));
+      const labels = Array.from(document.querySelectorAll('.label')).map(l => ({
+        text: l.textContent,
+        left: l.style.left,
+        top: l.style.top
+      }));
+      return { players, labels };
+    }
 
-document.getElementById("loadBtn").onclick =
-  () => document.getElementById("fileInput").click();
+    function saveBoard() {
+      const data = collectBoardData();
+      const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'tactical_board.json';
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
 
-document.getElementById("fileInput").addEventListener("change", e=>{
-  const file = e.target.files[0];
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = evt=>{
-    const data = JSON.parse(evt.target.result);
-    board.innerHTML = "";      // clear current players
-    data.forEach(p=>{
-      spawnPlayer(p.num, p.color, p.x, p.y);
-    });
-  };
-  reader.readAsText(file);
-});
-</script>
+    function loadBoard(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = evt => {
+        const data = JSON.parse(evt.target.result);
+        board.innerHTML = '';
+        data.players.forEach(p => createPlayer(p.num, p.color, parseFloat(p.left), parseFloat(p.top)));
+        data.labels.forEach(l => {
+          const el = document.createElement('div');
+          el.className = 'label';
+          el.textContent = l.text;
+          el.style.left = l.left;
+          el.style.top = l.top;
+          board.appendChild(el);
+        });
+      };
+      reader.readAsText(file);
+    }
+
+    document.getElementById('saveBtn').onclick = saveBoard;
+    document.getElementById('loadBtn').onclick = () => fileInput.click();
+    fileInput.addEventListener('change', loadBoard);
+    board.addEventListener('click', handleClick);
+
+    window.onload = spawnInitialPlayers;
+  </script>
 </body>
 </html>
