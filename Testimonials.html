@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -7,154 +6,156 @@
   <link rel="stylesheet" href="style.css">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Orbitron', sans-serif; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Orbitron', sans-serif; }body {
+  background: #000 url('Match_Winners_Final_4k.png') no-repeat center center/cover;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  color: #fff;
+}
 
-    body {
-      background: #000 url('Match_Winners_Final_4k.png') no-repeat center center/cover;
-      min-height: 100vh;
-      overflow-x: hidden;
-      position: relative;
-      color: #fff;
-    }
+body::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: url('stars-twinkle.png') repeat;
+  opacity: 0.3;
+  animation: twinkle 8s infinite;
+  z-index: 0;
+}
 
-    body::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: url('stars-twinkle.png') repeat;
-      opacity: 0.3;
-      animation: twinkle 8s infinite;
-      z-index: 0;
-    }
+@keyframes twinkle {
+  0% { opacity: 0.7; }
+  50% { opacity: 0.3; }
+  100% { opacity: 0.7; }
+}
 
-    @keyframes twinkle {
-      0% { opacity: 0.7; }
-      50% { opacity: 0.3; }
-      100% { opacity: 0.7; }
-    }
+main {
+  position: relative;
+  z-index: 1;
+  padding: 80px 20px 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  animation: fadeIn 2s ease-in;
+}
 
-    main {
-      position: relative;
-      z-index: 1;
-      padding: 80px 20px 60px;
-      max-width: 1200px;
-      margin: 0 auto;
-      text-align: center;
-      animation: fadeIn 2s ease-in;
-    }
+nav a {
+  margin: 0 15px;
+  font-size: 20px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  text-shadow: 0 0 10px #0ff;
+  transition: color 0.3s ease;
+}
 
-    nav a {
-      margin: 0 15px;
-      font-size: 20px;
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
-      text-shadow: 0 0 10px #0ff;
-      transition: color 0.3s ease;
-    }
+nav a:hover {
+  color: #0ff;
+  text-decoration: underline;
+}
 
-    nav a:hover {
-      color: #0ff;
-      text-decoration: underline;
-    }
+h1 {
+  font-size: 40px;
+  margin: 30px 0 50px;
+  text-shadow: 0 0 20px #0ff;
+}
 
-    h1 {
-      font-size: 40px;
-      margin: 30px 0 50px;
-      text-shadow: 0 0 20px #0ff;
-    }
+.testimonials, .testimonial-space {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  perspective: 1200px;
+}
 
-    .testimonials, .testimonial-space {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 30px;
-      perspective: 1200px;
-    }
+.testimonial-card, .card {
+  position: relative;
+  width: 280px;
+  padding: 20px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.15);
+  color: #fff;
+  text-align: left;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease, box-shadow 0.6s ease;
+  z-index: 1;
+}
 
-    .testimonial-card, .card {
-      position: relative;
-      width: 280px;
-      padding: 20px;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(0, 255, 255, 0.2);
-      box-shadow: 0 0 30px rgba(0, 255, 255, 0.15);
-      color: #fff;
-      text-align: left;
-      cursor: pointer;
-      transform-style: preserve-3d;
-      transition: transform 0.6s ease, box-shadow 0.6s ease;
-      z-index: 1;
-    }
+.testimonial-card:hover, .card:hover {
+  transform: translateY(-10px) rotateY(4deg) rotateX(4deg);
+  box-shadow: 0 0 50px rgba(0, 255, 255, 0.3);
+}
 
-    .testimonial-card:hover, .card:hover {
-      transform: translateY(-10px) rotateY(4deg) rotateX(4deg);
-      box-shadow: 0 0 50px rgba(0, 255, 255, 0.3);
-    }
+.avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid #0ff;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
 
-    .avatar {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      border: 2px solid #0ff;
-      object-fit: cover;
-      margin-bottom: 10px;
-    }
+.testimonial-card h3 {
+  margin: 10px 0 5px;
+  color: #0ff;
+}
 
-    .testimonial-card h3 {
-      margin: 10px 0 5px;
-      color: #0ff;
-    }
+.stars {
+  color: #ffeb3b;
+  font-size: 18px;
+  margin: 5px 0;
+}
 
-    .stars {
-      color: #ffeb3b;
-      font-size: 18px;
-      margin: 5px 0;
-    }
+.testimonial-card p,
+.card .quote,
+.card .author {
+  font-size: 14px;
+  line-height: 1.5;
+}
 
-    .testimonial-card p,
-    .card .quote,
-    .card .author {
-      font-size: 14px;
-      line-height: 1.5;
-    }
+.card .quote {
+  font-style: italic;
+  margin-bottom: 12px;
+}
 
-    .card .quote {
-      font-style: italic;
-      margin-bottom: 12px;
-    }
+.card .author {
+  font-weight: bold;
+  color: #0ff;
+}
 
-    .card .author {
-      font-weight: bold;
-      color: #0ff;
-    }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
+.zoomed {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) scale(1.6) !important;
+  z-index: 999 !important;
+  box-shadow: 0 0 100px rgba(0, 255, 255, 0.7) !important;
+}
 
-    .card.zoomed, .testimonial-card.zoomed {
-      transform: scale(1.6) translateZ(80px) !important;
-      z-index: 999;
-      box-shadow: 0 0 100px rgba(0, 255, 255, 0.7);
-    }
+body.zooming .card:not(.zoomed),
+body.zooming .testimonial-card:not(.zoomed) {
+  opacity: 0.1;
+  pointer-events: none;
+  filter: blur(2px);
+  transition: all 0.3s ease;
+}
 
-    body.zooming .card:not(.zoomed),
-    body.zooming .testimonial-card:not(.zoomed) {
-      opacity: 0.1;
-      pointer-events: none;
-      filter: blur(2px);
-      transition: all 0.3s ease;
-    }
+@media (max-width: 768px) {
+  h1 { font-size: 32px; }
+  .testimonial-card, .card { width: 90%; }
+  nav a { font-size: 18px; }
+}
 
-    @media (max-width: 768px) {
-      h1 { font-size: 32px; }
-      .testimonial-card, .card { width: 90%; }
-      nav a { font-size: 18px; }
-    }
   </style>
 </head>
 <body>
@@ -164,46 +165,43 @@
       <a href="services.html">SERVICES</a>
       <a href="testimonials.html" class="active">TESTIMONIALS</a>
       <a href="contact.html">CONTACT</a>
-    </nav>
+    </nav><h1>Player & Parent Testimonials</h1>
 
-    <h1>Player & Parent Testimonials</h1>
+<div class="testimonials">
+  <div class="testimonial-card">
+    <img src="image (5).jpg" alt="Player" class="avatar">
+    <h3>Leo H.</h3>
+    <div class="stars">★★★★★</div>
+    <p>“Coach Marcus helped me believe in myself and score match-winning goals!”</p>
+  </div>
 
-    <div class="testimonials">
-      <div class="testimonial-card">
-        <img src="image (5).jpg" alt="Player" class="avatar">
-        <h3>Leo H.</h3>
-        <div class="stars">★★★★★</div>
-        <p>“Coach Marcus helped me believe in myself and score match-winning goals!”</p>
-      </div>
+  <div class="testimonial-card">
+    <img src="image (6).jpg" alt="Parent" class="avatar">
+    <h3>Parent, U11</h3>
+    <div class="stars">★★★★★</div>
+    <p>“The sessions have boosted my child’s confidence and made him love football again!”</p>
+  </div>
 
-      <div class="testimonial-card">
-        <img src="image (6).jpg" alt="Parent" class="avatar">
-        <h3>Parent, U11</h3>
-        <div class="stars">★★★★★</div>
-        <p>“The sessions have boosted my child’s confidence and made him love football again!”</p>
-      </div>
+  <div class="testimonial-card">
+    <img src="image (8).jpg" alt="Player" class="avatar">
+    <h3>Mia R.</h3>
+    <div class="stars">★★★★☆</div>
+    <p>“Training is intense but fun — I’ve learned so much about decisive moments.”</p>
+  </div>
+</div>
 
-      <div class="testimonial-card">
-        <img src="image (8).jpg" alt="Player" class="avatar">
-        <h3>Mia R.</h3>
-        <div class="stars">★★★★☆</div>
-        <p>“Training is intense but fun — I’ve learned so much about decisive moments.”</p>
-      </div>
-    </div>
+<div class="testimonial-space">
+  <div class="card">
+    <p class="quote">“You are the best thing that has happened to the boys.”</p>
+    <p class="author">— Prajesh Kotecha</p>
+  </div>
+  <div class="card">
+    <p class="quote">“Since your arrival the boys have structure, a purpose and a common goal.”</p>
+    <p class="author">— U11 Parent</p>
+  </div>
+</div>
 
-    <div class="testimonial-space">
-      <div class="card">
-        <p class="quote">“You are the best thing that has happened to the boys.”</p>
-        <p class="author">— Prajesh Kotecha</p>
-      </div>
-      <div class="card">
-        <p class="quote">“Since your arrival the boys have structure, a purpose and a common goal.”</p>
-        <p class="author">— U11 Parent</p>
-      </div>
-    </div>
-  </main>
-
-  <script>
+  </main>  <script>
     const allCards = document.querySelectorAll('.card, .testimonial-card');
     let activeCard = null;
 
@@ -226,6 +224,5 @@
         activeCard = null;
       }
     });
-  </script>
-</body>
+  </script></body>
 </html>
