@@ -217,29 +217,28 @@
     </div>
   </main>
 
-  <script>
-    const cards = document.querySelectorAll('.card');
-    let activeCard = null;
+    <script>
+  const allCards = document.querySelectorAll('.card, .testimonial-card');
+  let activeCard = null;
 
-    cards.forEach(card => {
-      card.addEventListener('click', e => {
-        e.stopPropagation();
-        if (activeCard && activeCard !== card) {
-          activeCard.classList.remove('zoomed');
-        }
-        card.classList.toggle('zoomed');
-        document.body.classList.toggle('zooming', card.classList.contains('zoomed'));
-        activeCard = card.classList.contains('zoomed') ? card : null;
-      });
-    });
-
-    document.addEventListener('click', e => {
-      if (!e.target.closest('.card') && activeCard) {
+  allCards.forEach(card => {
+    card.addEventListener('click', e => {
+      e.stopPropagation();
+      if (activeCard && activeCard !== card) {
         activeCard.classList.remove('zoomed');
-        document.body.classList.remove('zooming');
-        activeCard = null;
       }
+      card.classList.toggle('zoomed');
+      document.body.classList.toggle('zooming', card.classList.contains('zoomed'));
+      activeCard = card.classList.contains('zoomed') ? card : null;
     });
+  });
+
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.card, .testimonial-card') && activeCard) {
+      activeCard.classList.remove('zoomed');
+      document.body.classList.remove('zooming');
+      activeCard = null;
+  });
   </script>
 </body>
 </html>
