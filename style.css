@@ -30,8 +30,8 @@ body::before {
 }
 
 @keyframes twinkle {
-  0% { opacity: 0.7; }
-  50% { opacity: 0.3; }
+  0%   { opacity: 0.7; }
+  50%  { opacity: 0.3; }
   100% { opacity: 0.7; }
 }
 
@@ -102,7 +102,7 @@ body::before {
   }
 }
 
-/* === MAIN HEADINGS === */
+/* === HEADINGS === */
 h1, h2 {
   text-align: center;
   color: #00f0ff;
@@ -112,51 +112,52 @@ h1, h2 {
 
 /* === BOOK-NOW ANIMATIONS === */
 @keyframes shootIn {
-  0%   { transform: translate(-50%, 280px) scale(0.12) rotate(-25deg); opacity: 0; filter: blur(6px); }
-  60%  { transform: translate(-50%, -30px) scale(1.25) rotate(5deg); opacity: 1; filter: blur(1px); }
+  0%   { transform: translate(-50%, -500px) scale(0.1) rotate(-30deg); opacity: 0; filter: blur(8px); }
+  70%  { transform: translate(-50%, 30px) scale(1.2) rotate(8deg); opacity: 1; filter: blur(1px); }
   100% { transform: translate(-50%, 0) scale(1) rotate(0); filter: blur(0); }
 }
 
 @keyframes shockwave {
-  0%   { transform: scale(0.2); opacity: 0.6; }
-  80%  { opacity: 0; }
-  100% { transform: scale(2); opacity: 0; }
+  0%   { transform: scale(0.5); opacity: 0.4; }
+  100% { transform: scale(2.5); opacity: 0; }
 }
 
-.book-now {
-  position: relative;
+.book-now.impact {
+  position: absolute;
+  bottom: 110px;
   left: 50%;
   transform: translateX(-50%);
   display: inline-block;
   padding: 16px 48px;
   border: 2px solid #0ff;
   border-radius: 50px;
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(0,0,0,.55);
   color: #fff;
   font-size: 22px;
   font-weight: bold;
   text-decoration: none;
   text-shadow: 0 0 8px #0ff;
-  box-shadow: 0 0 20px rgba(0,255,255,0.7), 0 0 40px rgba(0,255,255,0.4);
-  animation: shootIn 1.2s cubic-bezier(0.22, 1.2, 0.4, 1.0) 0.4s both;
-  transition: transform 0.25s ease;
+  box-shadow: 0 0 20px rgba(0,255,255,.7), 0 0 40px rgba(0,255,255,.4);
+  animation: shootIn 1.2s cubic-bezier(.22,1.2,.4,1.0) .3s both;
+  transition: transform .25s ease;
+  z-index: 10;
 }
 
-.book-now:hover {
-  transform: translateX(-50%) scale(1.08);
+.book-now.impact:hover {
+  transform: translateX(-50%) scale(1.05);
 }
 
-.book-now::after {
+.book-now.impact::after {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: inherit;
   border: 2px solid #0ff;
   z-index: -1;
-  animation: shockwave 0.7s 0.9s ease-out forwards;
+  animation: shockwave 0.6s 1.2s ease-out forwards;
 }
 
-/* === TESTIMONIALS === */
+/* === TESTIMONIAL CARDS === */
 .testimonial-card,
 .card {
   width: 280px;
