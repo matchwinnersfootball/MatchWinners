@@ -1,160 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-  <!-- Rebuild trigger -->
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Match Winners | Coach Marcus Wright</title>
-  <style>
-    html, body {
-      margin: 0; padding: 0;
-      height: 100%;
-    }
 
-    body {
-      display: flex;
-      flex-direction: column;
-      background: #000 url('Match_Winners_Final_4k.png') no-repeat center bottom;
-      background-size: cover; /* Cover prevents gaps */
-      font-family: Arial, sans-serif;
-      position: relative;
-    }
-
-    body::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: url('stars-twinkle.png') repeat;
-      animation: twinkle 5s infinite;
-      z-index: 0;
-    }
-
-    @keyframes twinkle {
-      0% { opacity: 0.8; }
-      50% { opacity: 0.3; }
-      100% { opacity: 0.8; }
-    }
-
-    main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 40px 20px;
-      z-index: 1;
-      animation: fadeIn 7s ease-in;
-    }
-
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
-    }
-
-    nav {
-      animation: slideDown 1.5s ease forwards;
-      margin-bottom: auto; /* push down button naturally */
-    }
-
-    @keyframes slideDown {
-      from {transform: translateY(-50px); opacity: 0;}
-      to {transform: translateY(0); opacity: 1;}
-    }
-
-    nav a {
-      display: inline-block;
-      margin: 0 20px;
-      font-size: 20px;
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
-      text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 30px #0ff;
-    }
-
-    nav a:hover {
-      text-decoration: underline;
-      color: #0ff;
-    }
-
-    footer {
-      position: sticky;
-      bottom: 0;
-      z-index: 1;
-      margin-top: auto;
-      display: flex;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .book-now {
-      background: rgba(0, 0, 0, 0.7);
-      color: #fff;
-      padding: 18px 50px;
-      border-radius: 40px;
-      font-size: 24px;
-      text-decoration: none;
-      border: 2px solid #0ff;
-      box-shadow: 0 0 30px rgba(0, 255, 255, 0.7), 0 0 60px rgba(0, 255, 255, 0.5);
-      transition: all 0.4s ease;
-      animation: kickIn 2s ease forwards;
-    }
-
-    .book-now:hover {
-      background: rgba(0, 255, 255, 0.2);
-      transform: scale(1.1);
-      box-shadow: 0 0 60px rgba(0, 255, 255, 0.7);
-    }
-
-    @keyframes kickIn {
-      0% {
-        transform: translateY(300px) scale(0.2) rotate(-30deg);
-        opacity: 0;
-      }
-      50% {
-        transform: translateY(-20px) scale(1.1) rotate(5deg);
-        opacity: 1;
-      }
-      70% {
-        transform: translateY(10px) scale(0.95) rotate(-3deg);
-      }
-      100% {
-        transform: translateY(0) scale(1) rotate(0deg);
-      }
-    }
-
-    @media (min-width: 768px) {
-      nav a {
-        font-size: 26px;
-      }
-      .book-now {
-        font-size: 32px;
-        padding: 25px 80px;
-      }
-    }
-  </style>
+  <!-- global stylesheet with nav, fonts, animations -->
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+
+  <!-- === NAVIGATION (shared on every page) =================== -->
+  <nav class="main-nav">
+    <div class="hamburger" id="hamb">
+      <span></span><span></span><span></span>
+    </div>
+
+    <div class="nav-links">
+      <a href="index.html" class="active">HOME</a>
+      <a href="about.html">ABOUT</a>
+      <a href="services.html">SERVICES</a>
+      <a href="testimonials.html">TESTIMONIALS</a>
+      <a href="contact.html">CONTACT</a>
+      <a href="tactical-board.html">TACTICAL BOARD</a>
+    </div>
+  </nav>
+
+  <!-- === MAIN HERO ========================================== -->
   <main>
-    <nav>
-      <a href="About.html">ABOUT</a>
-      <a href="Services.html">SERVICES</a>
-      <a href="Testimonials.html">TESTIMONIALS</a>
-      <a href="Contact.html">CONTACT</a>
-      <a href="Tactical Board.html">Tactics Board</a>
-    </nav>
+    <h1 style="text-align:center;margin-bottom:40px;">
+      Welcome to <span style="color:#00f0ff;">Match Winners</span> Coaching
+    </h1>
+    <p style="text-align:center;max-width:600px;">
+      Elite 1-to-1 and small-group training that turns potential into <em>match-winning</em> performances.
+    </p>
   </main>
+
+  <!-- === CALL TO ACTION  ==================================== -->
   <footer>
-    <a class="book-now" href="mailto:mw.ent@hotmail.com?subject=Match Winners Coaching Inquiry" onclick="playCheer()">BOOK NOW</a>
+    <a class="book-now"
+       href="mailto:mw.ent@hotmail.com?subject=Match Winners Coaching Inquiry"
+       onclick="playCheer()">BOOK NOW</a>
   </footer>
+
+  <!-- === CROWD CHEER AUDIO ================================== -->
   <audio id="cheer-sound">
     <source src="crowd-cheer.mp3" type="audio/mpeg">
   </audio>
+
+  <!-- === SCRIPTS ============================================ -->
   <script>
-    function playCheer() {
-      var audio = document.getElementById('cheer-sound');
+    /* play crowd sound on click */
+    function playCheer () {
+      const audio = document.getElementById('cheer-sound');
       audio.currentTime = 0;
       audio.play();
     }
+
+    /* mobile hamburger toggle */
+    const nav      = document.querySelector('.main-nav');
+    const burger   = document.getElementById('hamb');
+    burger.onclick = () => nav.classList.toggle('open');
   </script>
 </body>
 </html>
