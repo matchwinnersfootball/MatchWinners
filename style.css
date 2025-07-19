@@ -1,0 +1,187 @@
+/* === GLOBAL RESET & FONT === */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Orbitron', sans-serif;
+}
+
+/* === BODY & BACKGROUND === */
+body {
+  background: #000 url('Match_Winners_Final_4k.png') no-repeat center bottom;
+  background-size: cover;
+  color: #fff;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: url('stars-twinkle.png') repeat;
+  opacity: 0.3;
+  animation: twinkle 8s infinite;
+  z-index: 0;
+}
+
+@keyframes twinkle {
+  0% { opacity: 0.7; }
+  50% { opacity: 0.3; }
+  100% { opacity: 0.7; }
+}
+
+/* === NAVIGATION === */
+.main-nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 15px 20px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1000;
+}
+
+.main-nav .nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.main-nav a {
+  color: #00f0ff;
+  text-decoration: none;
+  font-weight: bold;
+  text-shadow: 0 0 10px #0ff;
+  transition: color 0.3s;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+  color: #fff;
+  text-shadow: 0 0 20px #00f0ff, 0 0 30px #0ff;
+}
+
+/* === MOBILE HAMBURGER === */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.hamburger span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background: #00f0ff;
+  border-radius: 2px;
+}
+
+@media (max-width: 768px) {
+  .hamburger { display: flex; }
+  .main-nav .nav-links {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    flex-direction: column;
+    background: rgba(0,0,0,0.9);
+    display: none;
+    text-align: center;
+    padding: 20px 0;
+  }
+  .main-nav.open .nav-links {
+    display: flex;
+  }
+}
+
+/* === MAIN HEADINGS === */
+h1, h2 {
+  text-align: center;
+  color: #00f0ff;
+  text-shadow: 0 0 12px #00f0ff, 0 0 25px #00f0ff;
+  margin: 30px 0;
+}
+
+/* === BUTTON STYLES === */
+.book-now {
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 18px 50px;
+  border-radius: 40px;
+  font-size: 24px;
+  text-decoration: none;
+  border: 2px solid #0ff;
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.7), 0 0 60px rgba(0, 255, 255, 0.5);
+  transition: all 0.4s ease;
+  animation: kickIn 2s ease forwards;
+}
+
+.book-now:hover {
+  background: rgba(0, 255, 255, 0.2);
+  transform: scale(1.1);
+  box-shadow: 0 0 60px rgba(0, 255, 255, 0.7);
+}
+
+@keyframes kickIn {
+  0% {
+    transform: translateY(300px) scale(0.2) rotate(-30deg);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(-20px) scale(1.1) rotate(5deg);
+    opacity: 1;
+  }
+  70% {
+    transform: translateY(10px) scale(0.95) rotate(-3deg);
+  }
+  100% {
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+}
+
+/* === TESTIMONIALS === */
+.testimonial-card,
+.card {
+  width: 280px;
+  padding: 20px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.15);
+  color: #fff;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.6s ease, box-shadow 0.6s ease;
+  transform-style: preserve-3d;
+}
+
+.testimonial-card:hover,
+.card:hover {
+  transform: translateY(-10px) rotateY(4deg) rotateX(4deg);
+  box-shadow: 0 0 50px rgba(0, 255, 255, 0.3);
+}
+
+.card.zoomed {
+  transform: scale(1.6) translateZ(100px) !important;
+  z-index: 999;
+  box-shadow: 0 0 100px rgba(0, 255, 255, 0.7);
+}
+
+/* === AVATARS === */
+.avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid #0ff;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
