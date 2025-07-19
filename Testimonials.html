@@ -5,19 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Player & Parent Testimonials | Match Winners</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: Orbitron, sans-serif;
+      font-family: 'Orbitron', sans-serif;
     }
 
     body {
-      background: #000;
-      background-image: url('Match_Winners_Final_4k.png');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
+      background: #000 url('Match_Winners_Final_4k.png') no-repeat center center/cover;
       min-height: 100vh;
       overflow-x: hidden;
       position: relative;
@@ -148,10 +146,19 @@
       to { opacity: 1; }
     }
 
+    /* === ZOOMED STATE === */
     .card.zoomed {
       transform: scale(1.4) translateZ(100px) !important;
       z-index: 999;
       box-shadow: 0 0 100px rgba(0, 255, 255, 0.7);
+    }
+
+    body.zooming .testimonial-card:not(.zoomed),
+    body.zooming .card:not(.zoomed) {
+      opacity: 0.15;
+      filter: blur(2px);
+      pointer-events: none;
+      transition: all 0.3s ease;
     }
 
     @media (max-width: 768px) {
@@ -165,8 +172,8 @@
   <main>
     <nav>
       <a href="index.html">HOME</a>
-      <a href="Services.html">SERVICES</a>
-      <a href="Testimonials.html">TESTIMONIALS</a>
+      <a href="services.html">SERVICES</a>
+      <a href="testimonials.html" class="active">TESTIMONIALS</a>
       <a href="#contact">CONTACT</a>
     </nav>
 
@@ -189,7 +196,7 @@
       </div>
 
       <div class="testimonial-card" style="transform: rotateX(3deg);">
-        <img src="https://source.unsplash.com/80x80/?portrait,teen" alt="Player" class="avatar">
+        <img src="image (8).jpg" alt="Player" class="avatar">
         <h3>Mia R.</h3>
         <div class="stars">★★★★☆</div>
         <p>“Training is intense but fun — I’ve learned so much about decisive moments.”</p>
@@ -221,13 +228,15 @@
           activeCard.classList.remove('zoomed');
         }
         card.classList.toggle('zoomed');
+        document.body.classList.toggle('zooming', card.classList.contains('zoomed'));
         activeCard = card.classList.contains('zoomed') ? card : null;
       });
     });
 
-    document.body.addEventListener('click', () => {
-      if (activeCard) {
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.card') && activeCard) {
         activeCard.classList.remove('zoomed');
+        document.body.classList.remove('zooming');
         activeCard = null;
       }
     });
