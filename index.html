@@ -5,18 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Match Winners | Coach Marcus Wright</title>
 
-  <!-- global stylesheet with nav, fonts, animations -->
+  <!-- Global styles and animations -->
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- === NAVIGATION (shared on every page) =================== -->
+  <!-- === NAVIGATION === -->
   <nav class="main-nav">
     <div class="hamburger" id="hamb">
       <span></span><span></span><span></span>
     </div>
-
     <div class="nav-links">
       <a href="index.html" class="active">HOME</a>
       <a href="about.html">ABOUT</a>
@@ -27,41 +26,34 @@
     </div>
   </nav>
 
-  <!-- === MAIN HERO ========================================== -->
-  <main>
-    <h1 style="text-align:center;margin-bottom:40px;">
-      Welcome to <span style="color:#00f0ff;">Match Winners</span> Coaching
-    </h1>
-    <p style="text-align:center;max-width:600px;">
-      Elite 1-to-1 and small-group training that turns potential into <em>match-winning</em> performances.
-    </p>
-  </main>
+  
 
-  <!-- === CALL TO ACTION  ==================================== -->
-  <footer>
+  <!-- === CALL TO ACTION BUTTON === -->
+  <footer style="margin-top: 60px;">
     <a class="book-now"
        href="mailto:mw.ent@hotmail.com?subject=Match Winners Coaching Inquiry"
        onclick="playCheer()">BOOK NOW</a>
   </footer>
 
-  <!-- === CROWD CHEER AUDIO ================================== -->
+  <!-- === CROWD CHEER AUDIO === -->
   <audio id="cheer-sound">
-    <source src="crowd-cheer.mp3" type="audio/mpeg">
+    <source src="crowd-cheer.mp3" type="audio/mpeg" />
   </audio>
 
-  <!-- === SCRIPTS ============================================ -->
+  <!-- === SCRIPT === -->
   <script>
-    /* play crowd sound on click */
-    function playCheer () {
+    // Play sound effect
+    function playCheer() {
       const audio = document.getElementById('cheer-sound');
       audio.currentTime = 0;
       audio.play();
     }
 
-    /* mobile hamburger toggle */
-    const nav      = document.querySelector('.main-nav');
-    const burger   = document.getElementById('hamb');
+    // Hamburger menu toggle
+    const nav = document.querySelector('.main-nav');
+    const burger = document.getElementById('hamb');
     burger.onclick = () => nav.classList.toggle('open');
   </script>
+
 </body>
 </html>
