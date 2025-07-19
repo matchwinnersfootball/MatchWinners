@@ -33,9 +33,8 @@
     }
 
     @keyframes twinkle {
-      0% { opacity: 0.7; }
-      50% { opacity: 0.3; }
-      100% { opacity: 0.7; }
+      0%, 100% { opacity: 0.7; }
+      50%      { opacity: 0.3; }
     }
 
     main {
@@ -88,7 +87,6 @@
       border-radius: 20px;
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
       border: 1px solid rgba(0, 255, 255, 0.2);
       box-shadow: 0 0 30px rgba(0, 255, 255, 0.15);
       color: #fff;
@@ -143,17 +141,17 @@
 
     @keyframes fadeIn {
       from { opacity: 0; }
-      to { opacity: 1; }
+      to   { opacity: 1; }
     }
 
-    .card.zoomed {
-      transform: scale(1.4) translateZ(100px) !important;
-      z-index: 999;
-      box-shadow: 0 0 100px rgba(0, 255, 255, 0.7);
+    .zoomed {
+      transform: scale(1.5) translateZ(200px) !important;
+      z-index: 1001 !important;
+      box-shadow: 0 0 100px rgba(0, 255, 255, 0.8);
     }
 
-    body.zooming .testimonial-card:not(.zoomed),
-    body.zooming .card:not(.zoomed) {
+    body.zooming .card:not(.zoomed),
+    body.zooming .testimonial-card:not(.zoomed) {
       opacity: 0.15;
       filter: blur(2px);
       pointer-events: none;
@@ -178,23 +176,23 @@
 
     <h1>Player & Parent Testimonials</h1>
 
-    <!-- Standard Testimonials -->
+    <!-- Testimonials with Avatars -->
     <div class="testimonials">
-      <div class="testimonial-card" style="transform: rotateY(5deg);">
+      <div class="testimonial-card">
         <img src="image (5).jpg" alt="Player" class="avatar">
         <h3>Leo H.</h3>
         <div class="stars">★★★★★</div>
         <p>“Coach Marcus helped me believe in myself and score match-winning goals!”</p>
       </div>
 
-      <div class="testimonial-card" style="transform: rotateY(-5deg);">
+      <div class="testimonial-card">
         <img src="image (6).jpg" alt="Parent" class="avatar">
         <h3>Parent, U11</h3>
         <div class="stars">★★★★★</div>
         <p>“The sessions have boosted my child’s confidence and made him love football again!”</p>
       </div>
 
-      <div class="testimonial-card" style="transform: rotateX(3deg);">
+      <div class="testimonial-card">
         <img src="image (8).jpg" alt="Player" class="avatar">
         <h3>Mia R.</h3>
         <div class="stars">★★★★☆</div>
@@ -202,42 +200,46 @@
       </div>
     </div>
 
-    <!-- Additional Styled Testimonials -->
+    <!-- Testimonials without Avatars -->
     <div class="testimonial-space">
-      <div class="card" style="transform: rotateY(6deg) rotateX(1deg) translateZ(10px);">
+      <div class="card">
         <p class="quote">“You are the best thing that has happened to the boys.”</p>
-        <p class="author">— <span style="color:#0ff; font-weight:bold;">Prajesh Kotecha</span></p>
+        <p class="author">— <span style="color:#0ff;">Prajesh Kotecha</span></p>
       </div>
 
-      <div class="card" style="transform: rotateY(-4deg) rotateX(-1deg) translateZ(-20px) scale(0.98);">
+      <div class="card">
         <p class="quote">“Since your arrival the boys have structure, a purpose and a common goal.”</p>
-        <p class="author">— <span style="color:#0ff; font-weight:bold;">U11 Parent</span></p>
+        <p class="author">— <span style="color:#0ff;">U11 Parent</span></p>
       </div>
     </div>
   </main>
 
   <script>
-    const allCards = document.querySelectorAll('.card, .testimonial-card');
-    let activeCard = null;
+    document.addEventListener('DOMContentLoaded', () => {
+      const cards = document.querySelectorAll('.card, .testimonial-card');
+      let activeCard = null;
 
-    allCards.forEach(card => {
-      card.addEventListener('click', e => {
-        e.stopPropagation();
-        if (activeCard && activeCard !== card) {
-          activeCard.classList.remove('zoomed');
-        }
-        card.classList.toggle('zoomed');
-        document.body.classList.toggle('zooming', card.classList.contains('zoomed'));
-        activeCard = card.classList.contains('zoomed') ? card : null;
+      cards.forEach(card => {
+        card.addEventListener('click', e => {
+          e.stopPropagation();
+
+          if (activeCard && activeCard !== card) {
+            activeCard.classList.remove('zoomed');
+          }
+
+          card.classList.toggle('zoomed');
+          document.body.classList.toggle('zooming', card.classList.contains('zoomed'));
+          activeCard = card.classList.contains('zoomed') ? card : null;
+        });
       });
-    });
 
-    document.addEventListener('click', e => {
-      if (!e.target.closest('.card, .testimonial-card') && activeCard) {
-        activeCard.classList.remove('zoomed');
-        document.body.classList.remove('zooming');
-        activeCard = null;
-      }
+      document.addEventListener('click', e => {
+        if (!e.target.closest('.card, .testimonial-card') && activeCard) {
+          activeCard.classList.remove('zoomed');
+          document.body.classList.remove('zooming');
+          activeCard = null;
+        }
+      });
     });
   </script>
 </body>
