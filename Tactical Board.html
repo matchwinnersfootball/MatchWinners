@@ -6,24 +6,20 @@
   <title>Advanced Tactical Board</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet"/>
   <style>
-    /* ---------- Base -------------------------------------------------- */
     *{box-sizing:border-box;font-family:'Orbitron',sans-serif;user-select:none}
     body{margin:0;background:#0b0b0b;color:#fff;overflow:hidden}
 
-    /* ---------- Toast / notification --------------------------------- */
     #toast{position:fixed;top:15px;right:15px;z-index:9999;pointer-events:none}
     .toast-msg{background:#00f0ff;color:#000;padding:8px 14px;border-radius:6px;
                margin-top:6px;font-weight:700;opacity:0;transform:translateY(-20px);
                transition:all .4s ease}
     .toast-show{opacity:1;transform:translateY(0)}
 
-    /* ---------- Toolbar toggle (bottom‑right) ------------------------- */
     #toolToggle{position:fixed;bottom:18px;right:18px;width:48px;height:48px;
                 background:#00f0ff;border-radius:50%;display:flex;align-items:center;
                 justify-content:center;font-size:26px;color:#111;cursor:pointer;z-index:1001;
                 box-shadow:0 0 12px #00f0ff,inset 0 0 6px rgba(0,0,0,.4)}
 
-    /* ---------- Sliding toolbox (bottom) ----------------------------- */
     #toolbox{position:fixed;bottom:-160px;left:0;width:100%;height:160px;
              background:#111d;border-top:2px solid #00f0ff;display:flex;gap:14px;
              align-items:center;justify-content:center;padding-top:20px;transition:bottom .4s;
@@ -34,39 +30,33 @@
           box-shadow:0 0 8px #00f0ff, inset 0 0 6px rgba(0,0,0,.3)}
     .tool:hover{filter:brightness(1.1);transform:translateY(-2px)}
 
-    /* ---------- Pitch container -------------------------------------- */
     #pitchWrapper{width:min(96vw,1200px);aspect-ratio:105/68;position:relative;
                  margin:60px auto 0;border:2px solid #00f0ff;border-radius:10px;
                  box-shadow:0 0 20px rgba(0,240,255,.2)}
-    #pitch{position:absolute;inset:0;background:url('—Pngtree—football pitch vector illustration design_6391956.png') center/cover no-repeat}
+    #pitch{position:absolute;inset:0;
+           background:url('—Pngtree—football pitch vector illustration design_6391956.png') center/cover no-repeat;
+           pointer-events:auto}
 
-    /* ---------- Bench (scrollable player list) ------------------------ */
     #benchLeft,#benchRight{position:absolute;top:0;height:100%;width:60px;display:flex;
                          flex-direction:column;align-items:center;overflow-y:auto;gap:12px;pointer-events:auto}
     #benchLeft{left:-70px}#benchRight{right:-70px}
 
-    /* ---------- Player chips ----------------------------------------- */
     .player{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-            font-weight:700;color:#fff;cursor:pointer;box-shadow:0 0 8px rgba(0,0,0,.6);transition:.2s}
+            font-weight:700;color:#fff;cursor:pointer;box-shadow:0 0 8px rgba(0,0,0,.6);transition:.2s;position:absolute}
     .purple{background:#7c3aed}.blue{background:#2563ff}
     .player:hover{transform:scale(1.1)}.selected{outline:3px solid #fff;transform:scale(1.25)}
 
-    /* ---------- Label chips ------------------------------------------ */
     .label{position:absolute;background:rgba(0,0,0,.7);color:#00f0ff;padding:4px 8px;border-radius:6px;font-size:12px;
            cursor:move;box-shadow:0 0 8px rgba(0,240,255,.4)}
 
-    /* ---------- Responsive tweak ------------------------------------- */
     @media(max-width:650px){.player{width:36px;height:36px;font-size:14px}}
   </style>
 </head>
 <body>
-  <!-- Toast container -->
-  <div id="toast"></div>
 
-  <!-- Toolbox toggle button -->
+  <div id="toast"></div>
   <div id="toolToggle">≡</div>
 
-  <!-- Sliding toolbox -->
   <div id="toolbox">
     <button class="tool" data-action="pass">🡒 Pass</button>
     <button class="tool" data-action="shoot">🡑 Shoot</button>
@@ -76,7 +66,6 @@
     <input type="file" id="fileInput" accept="application/json" hidden>
   </div>
 
-  <!-- Pitch wrapper and benches -->
   <div id="pitchWrapper">
     <div id="benchLeft"></div>
     <div id="benchRight"></div>
@@ -84,7 +73,6 @@
   </div>
 
 <script>
-/**************** Helper: toast *********************************/
 const toastBox = document.getElementById('toast');
 function showToast(msg){
   const t=document.createElement('div');t.className='toast-msg';t.textContent=msg;toastBox.appendChild(t);
@@ -92,7 +80,6 @@ function showToast(msg){
   setTimeout(()=>{t.classList.remove('toast-show');setTimeout(()=>t.remove(),400)},2200);
 }
 
-/**************** Pitch & benches ******************************/
 const pitch   = document.getElementById('pitch');
 const wrapper = document.getElementById('pitchWrapper');
 const benchL  = document.getElementById('benchLeft');
@@ -100,7 +87,8 @@ const benchR  = document.getElementById('benchRight');
 let selected=null;
 
 function createPlayer(num,color){
-  const p=document.createElement('div');p.className=`player ${color}`;p.textContent=num;p.dataset.color=color;p.dataset.num=num;
+  const p=document.createElement('div');p.className=`player ${color}`;p.textContent=num;
+  p.dataset.color=color;p.dataset.num=num;
   return p;
 }
 
@@ -110,24 +98,35 @@ function initPlayers(){
 }
 initPlayers();
 
-/**************** Select / move players ************************/
 function select(el){ if(selected) selected.classList.remove('selected'); selected=el; el.classList.add('selected'); }
 
-function placeSelected(x,y){ if(!selected) return;
-  // if coming from bench -> move into pitch container
+function placeSelected(x,y){
+  if(!selected) return;
   if(selected.parentElement!==pitch){ pitch.appendChild(selected); }
-  selected.style.left=x-21+'px'; selected.style.top=y-21+'px';
-  selected.classList.remove('selected'); selected=null; saveAuto(); }
+  selected.style.left=x-21+'px';
+  selected.style.top=y-21+'px';
+  selected.classList.remove('selected'); selected=null; saveAuto();
+}
 
-wrapper.addEventListener('click',e=>{
-  if(e.target.classList.contains('player')){ select(e.target); }
-  else if(e.target.id==='pitch'){ const rect=pitch.getBoundingClientRect(); placeSelected(e.clientX-rect.left,e.clientY-rect.top); }
+// --- Fix: Add direct listeners to pitch ---
+pitch.addEventListener('click', e => {
+  if (selected && e.target === pitch) {
+    const rect = pitch.getBoundingClientRect();
+    placeSelected(e.clientX - rect.left, e.clientY - rect.top);
+  }
 });
 
-/**************** Label tools **********************************/
+pitch.addEventListener('click', e => {
+  if (e.target.classList.contains('player')) {
+    select(e.target);
+    e.stopPropagation();
+  }
+});
+
 function createLabel(text,x,y){
   const l=document.createElement('div');l.className='label';l.textContent=text;l.style.left=x+'px';l.style.top=y+'px';
-  pitch.appendChild(l); makeDraggable(l); saveAuto(); }
+  pitch.appendChild(l); makeDraggable(l); saveAuto();
+}
 
 function makeDraggable(el){
   el.onpointerdown=e=>{
@@ -139,16 +138,17 @@ function makeDraggable(el){
   };
 }
 
-/**************** Toolbox actions ******************************/
 document.getElementById('toolToggle').onclick=()=>{
-  document.getElementById('toolbox').classList.toggle('open'); };
+  document.getElementById('toolbox').classList.toggle('open');
+};
 
 document.querySelectorAll('#toolbox .tool').forEach(btn=>{
   btn.addEventListener('click',()=>{
     const action=btn.dataset.action;
-    if(!action) return; showToast(`${action.charAt(0).toUpperCase()+action.slice(1)} tool ready: tap pitch to place`);
+    if(!action) return;
+    showToast(`${action.charAt(0).toUpperCase()+action.slice(1)} tool ready: tap pitch to place`);
     const handler=e=>{
-      if(e.target.id==='pitch'){
+      if(e.target===pitch){
         const rect=pitch.getBoundingClientRect();
         createLabel(action,e.clientX-rect.left-20,e.clientY-rect.top-10);
         window.removeEventListener('click',handler,true);
@@ -158,27 +158,41 @@ document.querySelectorAll('#toolbox .tool').forEach(btn=>{
   });
 });
 
-/**************** Save / Load **********************************/
 function gatherState(){
   const players=[...pitch.querySelectorAll('.player')].map(p=>({num:p.dataset.num,color:p.dataset.color,left:p.style.left,top:p.style.top}));
   const labels=[...pitch.querySelectorAll('.label')].map(l=>({text:l.textContent,left:l.style.left,top:l.style.top}));
   return {players,labels};
 }
-function renderState(data){ pitch.innerHTML='';
+function renderState(data){
+  pitch.innerHTML='';
   data.players.forEach(p=>{ const el=createPlayer(p.num,p.color); el.style.left=p.left; el.style.top=p.top; pitch.appendChild(el); });
   data.labels.forEach(l=>createLabel(l.text,parseFloat(l.left),parseFloat(l.top)));
 }
-function saveJSON(){ const blob=new Blob([JSON.stringify(gatherState())],{type:'application/json'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='tactics_board.json';a.click();URL.revokeObjectURL(a.href); showToast('Board saved!'); }
-function loadJSON(file){ const reader=new FileReader();reader.onload=e=>{renderState(JSON.parse(e.target.result));showToast('Board loaded');}; reader.readAsText(file); }
-function saveAuto(){ localStorage.setItem('autoBoard',JSON.stringify(gatherState())); }
-function loadAuto(){ const d=localStorage.getItem('autoBoard'); if(d) renderState(JSON.parse(d)); }
+function saveJSON(){
+  const blob=new Blob([JSON.stringify(gatherState())],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='tactics_board.json';a.click();URL.revokeObjectURL(a.href);
+  showToast('Board saved!');
+}
+function loadJSON(file){
+  const reader=new FileReader();
+  reader.onload=e=>{renderState(JSON.parse(e.target.result));showToast('Board loaded');};
+  reader.readAsText(file);
+}
+function saveAuto(){
+  localStorage.setItem('autoBoard',JSON.stringify(gatherState()));
+}
+function loadAuto(){
+  const d=localStorage.getItem('autoBoard'); if(d) renderState(JSON.parse(d));
+}
 
 document.getElementById('saveBtn').onclick=saveJSON;
 document.getElementById('loadBtn').onclick=()=>document.getElementById('fileInput').click();
 document.getElementById('fileInput').onchange=e=>{ if(e.target.files[0]) loadJSON(e.target.files[0]); };
 
-window.addEventListener('load',()=>{ loadAuto(); showToast('Tap players to pick, tap pitch to drop'); });
+window.addEventListener('load',()=>{
+  loadAuto();
+  showToast('Tap players to pick, tap pitch to drop');
+});
 </script>
 </body>
 </html>
