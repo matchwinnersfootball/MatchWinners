@@ -2,123 +2,139 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Match Winners | Coach Marcus Wright</title>  <!-- Fonts -->  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">  <style>
-    :root{
-      --accent:#00f0ff;
-      --accent-dim:rgba(0,240,255,.6);
-      --text:#fff;
-      --bg:#000;
-    }
+  <title>Match Winners | Coach Marcus Wright</title>  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">  <style>
+    :root{ --accent:#00f0ff; --accent-dim:rgba(0,240,255,.6); --text:#fff; }
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
-      margin:0;
-      color:var(--text);
+      margin:0; color:var(--text);
       background:#000 url('Match_Winners_Final_4k.png') no-repeat center bottom / cover fixed;
       font-family:'Orbitron', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      overflow-x:hidden;
-      position:relative;
+      overflow-x:hidden; position:relative;
     }
-    body::before{
-      content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
-      background:url('stars-twinkle.png') repeat;
-      animation:twinkle 5s infinite; opacity:.6;
-    }
+    body::before{content:""; position:fixed; inset:0; z-index:0; pointer-events:none; background:url('stars-twinkle.png') repeat; animation:twinkle 5s infinite; opacity:.6}
     @keyframes twinkle{0%{opacity:.8}50%{opacity:.3}100%{opacity:.8}}
 
-    /* ===== NAVIGATION ===== */
-    .main-nav{position:fixed; top:0; left:0; right:0; z-index:1000; padding:16px; display:flex; justify-content:center; gap:30px; backdrop-filter: blur(10px); background:rgba(0,0,0,.35); border-bottom:1px solid rgba(255,255,255,.06)}
-    .main-nav a{color:#fff; text-decoration:none; font-weight:700; font-size:16px; letter-spacing:.6px; text-shadow:0 0 8px var(--accent); opacity:.9}
+    /* ===== TOP NAV (no hamburger) ===== */
+    .main-nav{
+      position:fixed; top:0; left:0; right:0; z-index:1000;
+      display:flex; flex-wrap:wrap; justify-content:center; align-items:center;
+      gap:18px 22px; padding:16px max(10px, env(safe-area-inset-left)) 12px max(10px, env(safe-area-inset-right));
+      backdrop-filter: blur(10px); background:rgba(0,0,0,.35);
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .main-nav a{
+      flex:0 1 auto; /* allow wrapping */
+      color:#fff; text-decoration:none; font-weight:700; font-size:16px;
+      letter-spacing:.6px; text-shadow:0 0 8px var(--accent);
+      padding:4px 2px;
+    }
     .main-nav a:hover, .main-nav a.active{color:var(--accent)}
 
-    /* ===== HERO ===== */
-    .hero{position:relative; z-index:1; min-height:80vh; display:grid; place-items:center; padding-top:90px; text-align:center}
-    .hero h1{font-size:clamp(28px, 5vw, 56px); margin:0 16px; text-shadow:0 0 18px var(--accent)}
-    .hero p{max-width:760px; margin:14px auto 0; opacity:.9}
+    /* HERO */
+    .hero{position:relative; z-index:1; min-height:78vh; padding-top:96px}
 
-    /* Silhouette placeholder */
-    .silhouette{
-      position:absolute; bottom:0; left:50%; transform:translateX(-50%);
-      width:240px; height:400px;
-      background:url('player-silhouette.png') no-repeat center/contain;
-      filter:drop-shadow(0 0 30px rgba(0,0,0,.8));
-      pointer-events:none;
+    /* Silhouette */
+    .silhouette{position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:240px; height:400px; background:url('player-silhouette.png') no-repeat center/contain; filter:drop-shadow(0 0 30px rgba(0,0,0,.8)); pointer-events:none}
+
+    /* BOOK NOW (double size) */
+    .book-now-3d{--btn: var(--accent); position:absolute; padding:24px 36px; font-size:24px; font-weight:900; letter-spacing:1px; text-decoration:none; background:var(--btn); color:#000; border-radius:18px; box-shadow:0 18px 36px var(--accent-dim); z-index:2; transform:translate(-50%, -50%)}
+    .book-now-3d:active{transform:translate(-50%,-50%) scale(.98)}
+
+    /* FX */
+    .projectile{position:fixed; display:inline-block; padding:24px 36px; font-size:24px; font-weight:900; letter-spacing:1px; color:#000; background:var(--accent); border-radius:18px; box-shadow:0 22px 44px var(--accent-dim), 0 0 22px var(--accent); transform:translate(-50%,-50%) scale(1); z-index:1200}
+    .impact-ring{position:fixed; width:140px; height:140px; border-radius:50%; border:4px solid var(--accent); box-shadow:0 0 30px var(--accent); opacity:0; transform:translate(-50%,-50%) scale(.2); z-index:1100}
+    @keyframes ring{0%{opacity:.95; transform:translate(-50%,-50%) scale(.2)} 100%{opacity:0; transform:translate(-50%,-50%) scale(6)}}
+    .screen-flash{position:fixed; inset:0; background:radial-gradient(circle at 50% 50%, rgba(255,255,255,.28), rgba(255,255,255,0) 60%); opacity:0; z-index:1050}
+
+    .spacer{height:22vh}
+
+    /* ===== Responsive tweaks (wrap & scale nav) ===== */
+    @media (max-width: 820px){
+      .main-nav{gap:12px 16px; padding-top:14px}
+      .main-nav a{font-size:14px; letter-spacing:.4px}
+      .hero{padding-top:110px} /* extra space if nav wraps */
     }
-
-    /* BOOK NOW BUTTON */
-    .book-now-3d{
-      --btn: var(--accent);
-      position:absolute;
-      bottom:60px; /* foot position relative to silhouette */
-      left:50%; transform:translateX(-50%);
-      padding:14px 22px; font-weight:800; letter-spacing:.8px; text-decoration:none;
-      background:var(--btn); color:#000; border-radius:14px; box-shadow:0 10px 22px var(--accent-dim);
-      z-index:2;
+    @media (max-width: 520px){
+      .main-nav{gap:10px 12px}
+      .main-nav a{font-size:13px; letter-spacing:.3px}
+      .hero{padding-top:124px}
     }
-
-    /* projectile + smash */
-    .projectile{position:fixed; width:24px; height:24px; border-radius:50%; background:#fff; box-shadow:0 0 12px var(--accent), 0 0 28px var(--accent); pointer-events:none; z-index:1200; transform:translate(-50%, -50%); opacity:0}
-    .smash{position:fixed; width:120px; height:120px; border-radius:50%; border:4px solid var(--accent); box-shadow:0 0 30px var(--accent); pointer-events:none; z-index:1100; opacity:0; transform:translate(-50%, -50%) scale(.2)}
-    @keyframes smashAnim{0%{opacity:.9; transform:translate(-50%, -50%) scale(.2)} 100%{opacity:0; transform:translate(-50%, -50%) scale(6)}}
-
-    .spacer{height:18vh}
+    @media (max-width: 380px){
+      .main-nav a{font-size:12px; letter-spacing:.2px}
+      .hero{padding-top:136px}
+    }
   </style></head>
-<body>  <!-- === NAVIGATION === -->  <nav class="main-nav">
+<body>
+  <nav class="main-nav">
     <a href="index.html" class="active">HOME</a>
     <a href="About.html">ABOUT</a>
     <a href="Services.html">SERVICES</a>
     <a href="Testimonials.html">TESTIMONIALS</a>
     <a href="Contact.html">CONTACT</a>
     <a href="Tactical Board.html">TACTICAL BOARD</a>
-  </nav>  <!-- === HERO === -->  <section class="hero">
-    <div>
-      <h1>Making <span style="color:var(--accent)">Match Winners</span></h1>
-    
-    </div>
-  </section>  <!-- Silhouette + Book Now button at foot -->  <div class="silhouette"></div>
-  <a class="book-now-3d" id="bookNow" href="mailto:mw.ent@hotmail.com?subject=Match%20Winners%20Coaching%20Inquiry">BOOK NOW</a>  <div class="spacer"></div>  <!-- AUDIO -->  <audio id="cheer-sound" preload="auto">
-    <source src="crowd-cheer.mp3" type="audio/mpeg" />
-  </audio>  <script>
+  </nav>  <section class="hero"></section>  <div class="silhouette" id="sil"></div>
+  <a class="book-now-3d" id="bookNow" href="mailto:mw.ent@hotmail.com?subject=Match%20Winners%20Coaching%20Inquiry">BOOK NOW</a>  <div class="spacer"></div><audio id="cheer-sound" preload="auto"><source src="crowd-cheer.mp3" type="audio/mpeg" /></audio>
+
+  <script>
     const btn = document.getElementById('bookNow');
     const audio = document.getElementById('cheer-sound');
 
-    function animateShotAndSmash(e){
-      e.preventDefault();
-      try { audio.currentTime = 0; audio.play(); } catch(_){}
+    function positionAtFoot(){
+      const sil = document.getElementById('sil');
+      const r = sil.getBoundingClientRect();
+      const footX = r.left + r.width*0.70;  // right boot
+      const footY = r.top + r.height*0.82;  // slightly above the ground
+      btn.style.left = footX + 'px';
+      btn.style.top = footY + 'px';
+    }
 
+    function introShot(){
       const rect = btn.getBoundingClientRect();
       const startX = rect.left + rect.width/2;
       const startY = rect.top + rect.height/2;
       const targetX = window.innerWidth/2;
       const targetY = window.innerHeight/2;
 
-      const ball = document.createElement('div');
-      ball.className = 'projectile';
-      document.body.appendChild(ball);
+      const proj = document.createElement('div');
+      proj.className = 'projectile';
+      proj.textContent = 'BOOK NOW';
+      document.body.appendChild(proj);
+      proj.style.left = startX + 'px';
+      proj.style.top  = startY + 'px';
 
-      const smash = document.createElement('div');
-      smash.className = 'smash';
-      document.body.appendChild(smash);
-
-      ball.style.left = startX + 'px';
-      ball.style.top  = startY + 'px';
-      ball.style.opacity = '1';
-
-      const keyframes = [
-        { transform: `translate(-50%, -50%)`, offset: 0 },
-        { transform: `translate(${targetX-startX}px, ${targetY-startY}px)`, offset: 1 }
-      ];
-      ball.animate(keyframes, { duration: 600, easing: 'cubic-bezier(.4,.8,.2,1)' }).onfinish = () => {
-        ball.remove();
-        smash.style.left = targetX + 'px';
-        smash.style.top  = targetY + 'px';
-        smash.style.opacity = '1';
-        smash.style.animation = 'smashAnim 700ms ease-out forwards';
-        setTimeout(()=> smash.remove(), 750);
-        setTimeout(()=> { window.location.href = btn.getAttribute('href'); }, 150);
-      };
+      proj.animate([
+        { transform:`translate(-50%,-50%) scale(1)`, opacity:1 },
+        { transform:`translate(${targetX-startX}px, ${targetY-startY}px) scale(6)`, opacity:1 }
+      ], { duration: 650, easing: 'cubic-bezier(.2,.9,.2,1)' }).onfinish = () => { proj.remove(); };
     }
 
-    btn.addEventListener('click', animateShotAndSmash);
+    function impactOnly(e){
+      e.preventDefault();
+      try { audio.currentTime = 0; audio.play(); } catch(_){}
+
+      const targetX = window.innerWidth/2;
+      const targetY = window.innerHeight/2;
+      const ring = document.createElement('div');
+      ring.className = 'impact-ring';
+      ring.style.left = targetX + 'px';
+      ring.style.top  = targetY + 'px';
+      document.body.appendChild(ring);
+
+      const flash = document.createElement('div');
+      flash.className = 'screen-flash';
+      document.body.appendChild(flash);
+
+      ring.style.animation = 'ring 700ms ease-out forwards';
+      flash.animate([{opacity:0},{opacity:.75},{opacity:0}], {duration:380, easing:'ease-out'});
+
+      setTimeout(()=>{ ring.remove(); flash.remove(); window.location.href = btn.getAttribute('href'); }, 420);
+    }
+
+    // Ensure nav/hero spacing and button positioning first
+    window.addEventListener('load', () => { positionAtFoot(); requestAnimationFrame(introShot); });
+    window.addEventListener('resize', positionAtFoot);
+
+    btn.addEventListener('click', impactOnly);
   </script></body>
 </html>
