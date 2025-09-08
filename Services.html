@@ -16,9 +16,8 @@
       position: relative;
       font-family: Arial, sans-serif;
       color: #fff;
-      overflow-x: hidden; /* only hide horizontal overflow */
+      overflow-x: hidden;
     }
-
     body::before {
       content: "";
       position: absolute;
@@ -27,20 +26,12 @@
       animation: twinkle 5s infinite;
       z-index: 0;
     }
-
-    @keyframes twinkle {
-      0% { opacity: 0.8; }
-      50% { opacity: 0.3; }
-      100% { opacity: 0.8; }
-    }
+    @keyframes twinkle { 0%{opacity:.8} 50%{opacity:.3} 100%{opacity:.8} }
 
     main {
-      position: relative;
-      z-index: 1;
-      padding: 80px 20px 60px 20px;
-      max-width: 800px;
-      margin: 0 auto;
-      text-align: center;
+      position: relative; z-index: 1;
+      padding: 80px 20px 60px;
+      max-width: 800px; margin: 0 auto; text-align: center;
       animation: fadeIn 2s ease-in;
     }
 
@@ -48,74 +39,41 @@
       margin-bottom: 40px;
       animation: slideDown 1.5s ease forwards;
     }
-
     nav a {
-      margin: 0 20px;
-      font-size: 20px;
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
+      margin: 0 20px; font-size: 20px; color: #fff; text-decoration: none; font-weight: bold;
       text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 30px #0ff;
-      transition: color 0.3s ease;
+      transition: color .3s ease;
     }
+    nav a:hover { text-decoration: underline; color: #0ff; }
 
-    nav a:hover {
-      text-decoration: underline;
-      color: #0ff;
-    }
-
-    h1 {
-      font-size: 40px;
-      margin-bottom: 20px;
-      text-shadow: 0 0 20px #0ff;
-    }
+    h1 { font-size: 40px; margin-bottom: 20px; text-shadow: 0 0 20px #0ff; }
 
     .service {
-      position: relative;
-      margin: 20px 0;
-      font-size: 18px;
-      background: rgba(0,0,0,0.6);
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0,255,255,0.5);
-      transition: transform 0.3s ease;
-      line-height: 1.5;
+      position: relative; margin: 20px 0; font-size: 18px;
+      background: rgba(0,0,0,.6); padding: 20px; border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,255,255,.5);
+      transition: transform .3s ease; line-height: 1.5;
     }
-
-    .service:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 40px rgba(0,255,255,0.7);
-    }
+    .service:hover { transform: translateY(-5px); box-shadow: 0 0 40px rgba(0,255,255,.7); }
 
     .pricing-info {
-      display: none;
-      position: absolute;
-      bottom: 10px; 
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0,255,255,0.9);
-      color: #000;
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-size: 14px;
-      box-shadow: 0 0 10px rgba(0,255,255,0.7);
-      white-space: nowrap;
-      z-index: 2;
+      display: none; position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+      background: rgba(0,255,255,.9); color: #000; padding: 8px 12px; border-radius: 8px;
+      font-size: 14px; box-shadow: 0 0 10px rgba(0,255,255,.7); white-space: nowrap; z-index: 2;
     }
+    .service:hover .pricing-info { display: block; }
 
-    .service:hover .pricing-info {
-      display: block;
+    .cta-wrap { margin-top: 30px; }
+    .btn {
+      display:inline-block; background:#00f0ff; color:#000; padding:12px 18px; border-radius:10px;
+      font-weight:bold; text-decoration:none; box-shadow:0 0 14px rgba(0,240,255,.6);
+      transition: transform .2s ease, filter .2s ease;
     }
+    .btn:hover { transform: translateY(-2px); filter: brightness(1.05); }
+    .link { display:inline-block; margin-left:12px; color:#00f0ff; text-decoration:underline; }
 
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
-    }
-
-    @keyframes slideDown {
-      from {transform: translateY(-50px); opacity: 0;}
-      to {transform: translateY(0); opacity: 1;}
-    }
+    @keyframes fadeIn { from {opacity:0} to {opacity:1} }
+    @keyframes slideDown { from {transform:translateY(-50px);opacity:0} to {transform:translateY(0);opacity:1} }
 
     @media (min-width: 768px) {
       nav a { font-size: 24px; }
@@ -126,44 +84,52 @@
 </head>
 <body>
   <main>
+    <!-- FIXED: Ensure links point to files, not a missing #contact -->
     <nav>
       <a href="index.html">HOME</a>
       <a href="Services.html">SERVICES</a>
       <a href="Testimonials.html">TESTIMONIALS</a>
-      <a href="#contact">CONTACT</a>
+      <a href="Contact.html">CONTACT</a>
     </nav>
+
     <h1>Our Coaching Services</h1>
 
     <div class="service">
-       <strong>1-to-1 Coaching</strong><br>
+      <strong>1-to-1 Coaching</strong><br>
       Personalised sessions for players aged 9+, from grassroots to academy level. I use my trademarked techniques and frameworks to develop match-winning moments.
       <span class="pricing-info">💷 £60/hour • 10 for price of 8</span>
     </div>
 
     <div class="service">
-       <strong>Focus Group Training</strong><br>
+      <strong>Focus Group Training</strong><br>
       Small focus groups, 2–6 players, working together to sharpen real-game scenarios, decision making, and competitive edge.
       <span class="pricing-info">💷 £40/hour per person</span>
     </div>
 
     <div class="service">
-       <strong>Decisive Moment Analysis</strong><br>
+      <strong>Decisive Moment Analysis</strong><br>
       My unique framework helps players break down exactly what really wins matches — so they can repeat key actions under pressure.
     </div>
 
     <div class="service">
-       <strong>Mindset & Confidence Coaching</strong><br>
+      <strong>Mindset & Confidence Coaching</strong><br>
       Junior athlete psychology coaching to build resilience, self-belief, and leadership skills on and off the pitch.
     </div>
 
     <div class="service">
-       <strong>Academy Trial Prep</strong><br>
+      <strong>Academy Trial Prep</strong><br>
       Bespoke sessions to prepare players for club or academy trials — from technique to attitude.
     </div>
 
     <div class="service">
       🎉 <strong>Special Events & Guest Coaching</strong><br>
       Available for birthday sessions, team building, or bookings as a guest coach at your club, camp, or holiday setup.
+    </div>
+
+    <!-- NEW: Clear CTAs -->
+    <div class="cta-wrap">
+      <a class="btn" href="Contact.html">Book a Session</a>
+      <a class="link" href="mailto:mw.ent@hotmail.com">Email Us</a>
     </div>
 
   </main>
