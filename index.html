@@ -5,18 +5,84 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Match Winners | Coach Marcus Wright</title>
 
-  <!-- Global styles and animations -->
-  <link rel="stylesheet" href="style.css">
-</head>
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 
+  <style>
+    :root{
+      --accent:#00f0ff;
+      --accent-dim:rgba(0,240,255,.6);
+      --text:#fff;
+      --bg:#000;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      color:var(--text);
+      background:#000 url('Match_Winners_Final_4k.png') no-repeat center bottom / cover fixed;
+      font-family:'Orbitron', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      overflow-x:hidden;
+    }
+    /* twinkle overlay */
+    body::before{
+      content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+      background:url('stars-twinkle.png') repeat;
+      animation:twinkle 5s infinite; opacity:.6;
+    }
+    @keyframes twinkle{0%{opacity:.8}50%{opacity:.3}100%{opacity:.8}}
+
+    /* ===== NAVIGATION ===== */
+    .main-nav{position:fixed; top:0; left:0; right:0; z-index:1000; padding:12px 18px; display:flex; align-items:center; justify-content:space-between; backdrop-filter: blur(10px); background:rgba(0,0,0,.35); border-bottom:1px solid rgba(255,255,255,.06)}
+    .brand{display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.5px}
+    .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--accent); box-shadow:0 0 12px var(--accent)}
+
+    .nav-links{display:flex; gap:18px; align-items:center}
+    .nav-links a{color:#fff; text-decoration:none; font-weight:700; font-size:14px; letter-spacing:.6px; text-shadow:0 0 8px var(--accent); opacity:.9}
+    .nav-links a:hover, .nav-links a.active{color:var(--accent)}
+
+    /* hamburger */
+    .hamburger{width:38px; height:28px; display:flex; flex-direction:column; justify-content:space-between; cursor:pointer}
+    .hamburger span{display:block; height:3px; background:#fff; border-radius:2px; box-shadow:0 0 6px var(--accent)}
+
+    @media (max-width: 860px){
+      .nav-links{position:fixed; top:60px; right:18px; left:18px; display:grid; gap:10px; background:rgba(0,0,0,.7); border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:14px; transform:scale(.98) translateY(-10px); opacity:0; pointer-events:none; transition:opacity .25s, transform .25s}
+      .main-nav.open .nav-links{opacity:1; pointer-events:auto; transform:scale(1) translateY(0)}
+    }
+
+    /* ===== HERO ===== */
+    .hero{position:relative; z-index:1; min-height:70vh; display:grid; place-items:center; padding-top:90px; text-align:center}
+    .hero h1{font-size:clamp(28px, 5vw, 56px); margin:0 16px; text-shadow:0 0 18px var(--accent)}
+    .hero p{max-width:760px; margin:14px auto 0; opacity:.9}
+
+    /* ===== BOOK NOW (3D projectile + shockwave) ===== */
+    .book-now-3d{
+      --btn: var(--accent);
+      position:relative; display:inline-block; margin-top:26px;
+      padding:14px 22px; font-weight:800; letter-spacing:.8px; text-decoration:none;
+      background:var(--btn); color:#000; border-radius:14px; box-shadow:0 10px 22px var(--accent-dim);
+      transform: perspective(600px) translateZ(0); transition: transform .12s ease, filter .25s ease;
+    }
+    .book-now-3d:hover{ filter:brightness(1.05); transform: perspective(600px) translateZ(8px)}
+    .book-now-3d:active{ transform: perspective(600px) translateZ(2px)}
+
+    /* projectile */
+    .projectile{position:fixed; width:12px; height:12px; border-radius:50%; background:#fff; box-shadow:0 0 12px var(--accent), 0 0 28px var(--accent); pointer-events:none; z-index:1200; transform:translate(-50%, -50%); opacity:0}
+    .shockwave{position:fixed; width:10px; height:10px; border-radius:50%; border:2px solid var(--accent); box-shadow:0 0 25px var(--accent); pointer-events:none; z-index:1100; opacity:0; transform:translate(-50%, -50%) scale(.2)}
+    @keyframes fly{from{opacity:1} to{opacity:1}}
+    @keyframes wave{0%{opacity:.9; transform:translate(-50%, -50%) scale(.2)} 100%{opacity:0; transform:translate(-50%, -50%) scale(8)}}
+
+    /* ===== FOOTER SPACER ===== */
+    .spacer{height:18vh}
+  </style>
+</head>
 <body>
 
   <!-- === NAVIGATION === -->
-  <nav class="main-nav">
-    <div class="hamburger" id="hamb">
-      <span></span><span></span><span></span>
-    </div>
-    <div class="nav-links">
+  <nav class="main-nav" id="nav">
+    <div class="brand"><span class="dot"></span> Match Winners</div>
+    <div class="hamburger" id="hamb"><span></span><span></span><span></span></div>
+    <div class="nav-links" id="links">
       <a href="index.html" class="active">HOME</a>
       <a href="About.html">ABOUT</a>
       <a href="Services.html">SERVICES</a>
@@ -26,33 +92,82 @@
     </div>
   </nav>
 
-  
+  <!-- === HERO === -->
+  <section class="hero">
+    <div>
+      <h1>Making <span style="color:var(--accent)">Match Winners</span></h1>
+      <p>Elite 1‑to‑1 and small‑group football coaching in North & West London. Decisive‑moment training that turns good players into game changers.</p>
+      <a class="book-now-3d" id="bookNow" href="mailto:mw.ent@hotmail.com?subject=Match%20Winners%20Coaching%20Inquiry">BOOK NOW</a>
+    </div>
+  </section>
 
-  <!-- BOOK NOW Impact Button -->
-<a class="book-now-3d"
-   href="mailto:mw.ent@hotmail.com?subject=Match Winners Coaching Inquiry"
-   onclick="playCheer()">BOOK NOW</a>
-  </footer>
+  <div class="spacer"></div>
 
-  <!-- === CROWD CHEER AUDIO === -->
-  <audio id="cheer-sound">
+  <!-- AUDIO -->
+  <audio id="cheer-sound" preload="auto">
     <source src="crowd-cheer.mp3" type="audio/mpeg" />
   </audio>
 
-  <!-- === SCRIPT === -->
+  <!-- FX elements created dynamically -->
   <script>
-    // Play sound effect
-    function playCheer() {
-      const audio = document.getElementById('cheer-sound');
-      audio.currentTime = 0;
-      audio.play();
+    // Hamburger toggle (mobile)
+    const nav = document.getElementById('nav');
+    const burger = document.getElementById('hamb');
+    burger.addEventListener('click', ()=> nav.classList.toggle('open'));
+
+    // BOOK NOW projectile + shockwave + delayed mailto
+    const btn = document.getElementById('bookNow');
+    const audio = document.getElementById('cheer-sound');
+
+    function animateShotAndOpenMailto(e){
+      e.preventDefault();
+      try { audio.currentTime = 0; audio.play(); } catch(_){}
+
+      // Compute start (button center) and target (bottom center)
+      const rect = btn.getBoundingClientRect();
+      const startX = rect.left + rect.width/2;
+      const startY = rect.top + rect.height/2;
+      const targetX = window.innerWidth/2;
+      const targetY = window.innerHeight - 40; // near bottom
+
+      // Create projectile
+      const ball = document.createElement('div');
+      ball.className = 'projectile';
+      document.body.appendChild(ball);
+
+      // Create shockwave
+      const wave = document.createElement('div');
+      wave.className = 'shockwave';
+      document.body.appendChild(wave);
+
+      // Initial positions
+      ball.style.left = startX + 'px';
+      ball.style.top  = startY + 'px';
+      ball.style.opacity = '1';
+
+      // Animate via Web Animations API (arc path approximation)
+      const midX = (startX + targetX)/2;
+      const midY = Math.min(startY, targetY) - Math.min(240, window.innerHeight*0.25); // arc height
+
+      const keyframes = [
+        { transform: `translate(-50%, -50%)`, offset: 0 },
+        { transform: `translate(${midX-startX}px, ${midY-startY}px)`, offset: .5 },
+        { transform: `translate(${targetX-startX}px, ${targetY-startY}px)`, offset: 1 }
+      ];
+      ball.animate(keyframes, { duration: 700, easing: 'cubic-bezier(.2,.8,.2,1)' }).onfinish = () => {
+        ball.remove();
+        // Shockwave at target
+        wave.style.left = targetX + 'px';
+        wave.style.top  = targetY + 'px';
+        wave.style.opacity = '1';
+        wave.style.animation = 'wave 600ms ease-out forwards';
+        setTimeout(()=> wave.remove(), 650);
+        // Open mailto after FX
+        setTimeout(()=> { window.location.href = btn.getAttribute('href'); }, 120);
+      };
     }
 
-    // Hamburger menu toggle
-    const nav = document.querySelector('.main-nav');
-    const burger = document.getElementById('hamb');
-    burger.onclick = () => nav.classList.toggle('open');
+    btn.addEventListener('click', animateShotAndOpenMailto);
   </script>
-
 </body>
 </html>
