@@ -42,7 +42,7 @@
     .book-now-3d:active{transform:translate(-50%,-50%) scale(.98)}
 
     /* FX */
-    .projectile{position:fixed; display:inline-block; padding:24px 36px; font-size:24px; font-weight:900; letter-spacing:1px; color:#000; background:var(--accent); border-radius:18px; box-shadow:0 22px 44px var(--accent-dim), 0 0 22px var(--accent); transform:translate(-50%,-50%) scale(1); z-index:1200}
+    .projectile{position:fixed; display:inline-block; padding:24px 36px; font-size:24px; font-weight:900; letter-spacing:1px; color:#000; background:var(--accent); border-radius:18px; box-shadow:0 22px 44px var(--accent-dim), 0 0 22px var(--accent); transform:translate(-50%,-50%) scale(1); z-index:1200; will-change: transform, filter; backface-visibility: hidden;}
     .impact-ring{position:fixed; width:140px; height:140px; border-radius:50%; border:4px solid var(--accent); box-shadow:0 0 30px var(--accent); opacity:0; transform:translate(-50%,-50%) scale(.2); z-index:1100}
     @keyframes ring{0%{opacity:.95; transform:translate(-50%,-50%) scale(.2)} 100%{opacity:0; transform:translate(-50%,-50%) scale(6)}}
     .screen-flash{position:fixed; inset:0; background:radial-gradient(circle at 50% 50%, rgba(255,255,255,.28), rgba(255,255,255,0) 60%); opacity:0; z-index:1050}
@@ -78,63 +78,79 @@
 
   <script>
     const btn = document.getElementById('bookNow');
-    const audio = document.getElementById('cheer-sound');
+const audio = document.getElementById('cheer-sound');
 
-    function positionAtFoot(){
-      const sil = document.getElementById('sil');
-      const r = sil.getBoundingClientRect();
-      const footX = r.left + r.width*0.70;  // right boot
-      const footY = r.top + r.height*0.82;  // slightly above the ground
-      btn.style.left = footX + 'px';
-      btn.style.top = footY + 'px';
-    }
+// ---- Easily tweakable foot anchor (0→left/top, 1→right/bottom) ----
+const FOOT_X_RATIO = 0.40; // strike foot (left/front)
+const FOOT_Y_RATIO = 0.86; // slightly above ground // very near ground
 
-    function introShot(){
-      const rect = btn.getBoundingClientRect();
-      const startX = rect.left + rect.width/2;
-      const startY = rect.top + rect.height/2;
-      const targetX = window.innerWidth/2;
-      const targetY = window.innerHeight/2;
+function positionAtFoot(){
+  const sil = document.getElementById('sil');
+  const r = sil.getBoundingClientRect();
+  // Base ratios
+  let footX = r.left + r.width*FOOT_X_RATIO;
+  let footY = r.top + r.height*FOOT_Y_RATIO;
+  // Small device nudge so it lines up with the circled area
+  if (window.innerWidth < 420) {
+    footX -= 6; // move slightly left on very small screens
+    footY += 2; // tiny downward nudge
+  }
+  btn.style.left = footX + 'px';
+  btn.style.top = footY + 'px';
+}
 
-      const proj = document.createElement('div');
-      proj.className = 'projectile';
-      proj.textContent = 'BOOK NOW';
-      document.body.appendChild(proj);
-      proj.style.left = startX + 'px';
-      proj.style.top  = startY + 'px';
+// ---- Page-load shot: starts small by the foot, scales up with motion blur to screen center ----
+function introShot(){
+  const rect = btn.getBoundingClientRect();
+  const startX = rect.left + rect.width/2;
+  const startY = rect.top + rect.height/2;
+  const targetX = window.innerWidth/2;
+  const targetY = window.innerHeight/2;
 
-      proj.animate([
-        { transform:`translate(-50%,-50%) scale(1)`, opacity:1 },
-        { transform:`translate(${targetX-startX}px, ${targetY-startY}px) scale(6)`, opacity:1 }
-      ], { duration: 650, easing: 'cubic-bezier(.2,.9,.2,1)' }).onfinish = () => { proj.remove(); };
-    }
+  const proj = document.createElement('div');
+  proj.className = 'projectile';
+  proj.textContent = 'BOOK NOW';
+  proj.style.left = startX + 'px';
+  proj.style.top  = startY + 'px';
+  proj.style.transform = 'translate(-50%,-50%) scale(0.55)';
+  proj.style.filter = 'blur(0px)';
+  document.body.appendChild(proj);
 
-    function impactOnly(e){
-      e.preventDefault();
-      try { audio.currentTime = 0; audio.play(); } catch(_){}
+  proj.animate([
+    { transform:`translate(-50%,-50%) scale(0.55)`, filter:'blur(0px)', offset:0 },
+    { transform:`translate(${targetX-startX}px, ${targetY-startY}px) scale(3.2)`, filter:'blur(3px)', offset:0.6 },
+    { transform:`translate(${targetX-startX}px, ${targetY-startY}px) scale(6)`, filter:'blur(0.6px)', offset:1 }
+  ], { duration: 680, easing: 'cubic-bezier(.18,.9,.2,1)', fill:'forwards' }).onfinish = () => {
+    proj.remove();
+  };
+}
 
-      const targetX = window.innerWidth/2;
-      const targetY = window.innerHeight/2;
-      const ring = document.createElement('div');
-      ring.className = 'impact-ring';
-      ring.style.left = targetX + 'px';
-      ring.style.top  = targetY + 'px';
-      document.body.appendChild(ring);
+// ---- Click: cheer + impact ring (no travel) ----
+function impactOnly(e){
+  e.preventDefault();
+  try { audio.currentTime = 0; audio.play(); } catch(_){}
 
-      const flash = document.createElement('div');
-      flash.className = 'screen-flash';
-      document.body.appendChild(flash);
+  const targetX = window.innerWidth/2;
+  const targetY = window.innerHeight/2;
+  const ring = document.createElement('div');
+  ring.className = 'impact-ring';
+  ring.style.left = targetX + 'px';
+  ring.style.top  = targetY + 'px';
+  document.body.appendChild(ring);
 
-      ring.style.animation = 'ring 700ms ease-out forwards';
-      flash.animate([{opacity:0},{opacity:.75},{opacity:0}], {duration:380, easing:'ease-out'});
+  const flash = document.createElement('div');
+  flash.className = 'screen-flash';
+  document.body.appendChild(flash);
 
-      setTimeout(()=>{ ring.remove(); flash.remove(); window.location.href = btn.getAttribute('href'); }, 420);
-    }
+  ring.style.animation = 'ring 700ms ease-out forwards';
+  flash.animate([{opacity:0},{opacity:.75},{opacity:0}], {duration:380, easing:'ease-out'});
 
-    // Ensure nav/hero spacing and button positioning first
-    window.addEventListener('load', () => { positionAtFoot(); requestAnimationFrame(introShot); });
-    window.addEventListener('resize', positionAtFoot);
+  setTimeout(()=>{ ring.remove(); flash.remove(); window.location.href = btn.getAttribute('href'); }, 420);
+}
 
-    btn.addEventListener('click', impactOnly);
+window.addEventListener('load', () => { positionAtFoot(); requestAnimationFrame(introShot); });
+window.addEventListener('resize', positionAtFoot);
+
+btn.addEventListener('click', impactOnly);
   </script></body>
 </html>
